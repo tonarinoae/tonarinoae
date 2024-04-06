@@ -1,0 +1,26 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`EssenitalLink > match snapshot 1`] = `
+<body>
+  <div>
+    <q-item
+      clickable=""
+      href="#"
+      tag="a"
+      target="_blank"
+    >
+      <!--v-if-->
+      <q-item-section>
+        <q-item-label>
+          Hello World
+        </q-item-label>
+        <q-item-label
+          caption=""
+        >
+          
+        </q-item-label>
+      </q-item-section>
+    </q-item>
+  </div>
+</body>
+`;

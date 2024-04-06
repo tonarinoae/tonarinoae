@@ -1,0 +1,32 @@
+{
+  "extends": "@quasar/app-vite/tsconfig-preset",
+  "compilerOptions": {
+    /* bypass check node_modules */
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "preserveSymlinks": true,
+    "resolveJsonModule": true,
+    "noEmitOnError": false,
+    /* end */
+    "baseUrl": "./",
+    "types": [
+      "vitest/globals",
+      "vite-plugin-pages/client",
+      "vite-plugin-vue-layouts/client",
+      "unplugin-vue-define-options/macros-global",
+      "onu-ui/volar"
+    ],
+    "esModuleInterop": true,
+    "lib": ["esnext", "DOM"]
+  },
+  "exclude": [
+    "./quasar.config.js"
+  ],
+  "vueCompilerOptions": {
+    "target": 3, // or 2.7 for Vue 2
+    "plugins": [
+      "@vue-macros/volar/define-options"
+      // ...more feature
+    ]
+  }
+}

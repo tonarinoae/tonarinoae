@@ -1,0 +1,126 @@
+name: Try build
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: ["main"]
+  schedule:
+    - cron: "15 10 * * 5"
+
+jobs:
+  android:
+    name: Build for PWA
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        node_version: [16, 18, 20]
+        include:
+          # Active LTS + other OS
+          - os: macos-latest
+            node_version: 18
+          - os: windows-latest
+            node_version: 18
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - uses: pnpm/action-setup@v2.0.1
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 8.3.1
+          run_install: false
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install depends
+        run: sh install.sh
+
+      - name: Build PWA
+        run: pnpm build:pwa
+  pwa:
+    name: Build for Android
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        node_version: [20]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: "zulu" # See 'Supported distributions' for available options
+          java-version: "17"
+
+      - uses: pnpm/action-setup@v2.0.1
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 8.3.1
+          run_install: false
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install depends
+        run: sh install.sh
+
+      - name: Read secrets
+        env:
+          SUPABASE_PROJECT_URL: ${{ secrets.SUPABASE_PROJECT_URL }}
+          SUPABASE_PROJECT_KEY: ${{ secrets.SUPABASE_PROJECT_KEY }}
+        run: |
+          echo '' > .env
+          echo 'SUPABASE_PROJECT_URL="${{ secrets.SUPABASE_PROJECT_URL }}"' >> .env
+          echo 'SUPABASE_PROJECT_KEY="${{ secrets.SUPABASE_PROJECT_KEY }}"' >> .env
+          echo '${{ secrets.GOOGLE_SERVICES }}' > src-capacitor/android/google-services.json
+
+      - name: Build Quasar
+        run: pnpm build:android:ci
+
+      - name: Build Android App
+        uses: anime-vsub/android-build-action@1.2.1
+        with:
+          project-path: src-capacitor/android
+          output-path: apk-release.apk
+          gradle-task: assembleRelease

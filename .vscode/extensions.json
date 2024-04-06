@@ -1,0 +1,38 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "editorconfig.editorconfig",
+    "wayou.vscode-todo-highlight",
+    "lokalise.i18n-ally",
+    "codeium.codeium",
+    "antfu.iconify",
+    "unthrottled.doki-theme",
+    "codium.codium",
+    "equinusocio.vsc-material-theme-icons",
+    "yoavbls.pretty-ts-errors",
+    "wix.vscode-import-cost",
+    "gengjiawen.vscode-npm-dependency",
+    "socketsecurity.vscode-socket-security",
+    "meganrogge.template-string-converter",
+    "johnsoncodehk.vscode-typescript-vue-plugin",
+    "aminer.codegeex",
+    "vue.volar",
+    "streetsidesoftware.code-spell-checker",
+    "voorjaar.windicss-intellisense",
+    "antfu.unocss",
+    "zixuanchen.vitest-explorer",
+    "eamodio.gitlens",
+    "sourcegraph.cody-ai",
+    "codeandstuff.package-json-upgrade",
+    "manuth.eslint-language-service",
+    "snyk-security.snyk-vulnerability-scanner",
+    "tabnine.tabnine-vscode"
+  ],
+  "unwantedRecommendations": [
+    "octref.vetur",
+    "hookyqr.beautify",
+    "dbaeumer.jshint",
+    "ms-vscode.vscode-typescript-tslint-plugin"
+  ]
+}
