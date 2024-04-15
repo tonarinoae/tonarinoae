@@ -96,7 +96,7 @@ devDependencies:
     version: 3.1.1
   '@quasar/quasar-app-extension-testing-e2e-cypress':
     specifier: ^5.2.0
-    version: 5.2.0(@babel/core@7.23.9)(@babel/preset-env@7.23.9)(babel-loader@9.1.3)(cypress@13.6.4)(eslint-plugin-cypress@2.15.1)(vite@2.9.17)(webpack@5.90.0)
+    version: 5.2.0(@babel/core@7.23.9)(@babel/preset-env@7.23.9)(babel-loader@9.1.3)(cypress@13.7.3)(eslint-plugin-cypress@2.15.1)(vite@2.9.17)(webpack@5.90.0)
   '@quasar/quasar-app-extension-testing-unit-vitest':
     specifier: ^0.4.0
     version: 0.4.0(@vitest/ui@1.2.2)(@vue/test-utils@2.4.4)(quasar@2.14.3)(typescript@5.3.3)(vite@2.9.17)(vitest@1.2.2)(vue@3.4.15)
@@ -149,8 +149,8 @@ devDependencies:
     specifier: ^7.0.3
     version: 7.0.3
   cypress:
-    specifier: ^13.6.4
-    version: 13.6.4
+    specifier: ^13.7.3
+    version: 13.7.3
   dotenv:
     specifier: ^16.4.1
     version: 16.4.1
@@ -1543,7 +1543,7 @@ packages:
     resolution: {integrity: sha512-RpfLEtTlyIxeNPGKcokS+p3BZII/Q3bYxryFRglh5H3A3T8q9fsLYm72VYAMEOOIBLEa8o93kFLiBDUWKrwXZA==}
     dev: true
 
-  /@cypress/code-coverage@3.12.19(@babel/core@7.23.9)(@babel/preset-env@7.23.9)(babel-loader@9.1.3)(cypress@13.6.4)(webpack@5.90.0):
+  /@cypress/code-coverage@3.12.19(@babel/core@7.23.9)(@babel/preset-env@7.23.9)(babel-loader@9.1.3)(cypress@13.7.3)(webpack@5.90.0):
     resolution: {integrity: sha512-RNpgESArIwX2PG7k0KEb941eSYSBEGF1WB5NPeWrVJMX6KeAxj3Ki5aeYlFeV+wxoAJ+7gcF4s5xV18BQLCpjQ==}
     peerDependencies:
       '@babel/core': ^7.0.1
@@ -1557,7 +1557,7 @@ packages:
       '@cypress/webpack-preprocessor': 6.0.1(@babel/core@7.23.9)(@babel/preset-env@7.23.9)(babel-loader@9.1.3)(webpack@5.90.0)
       babel-loader: 9.1.3(@babel/core@7.23.9)(webpack@5.90.0)
       chalk: 4.1.2
-      cypress: 13.6.4
+      cypress: 13.7.3
       dayjs: 1.11.10
       debug: 4.3.4(supports-color@8.1.1)
       execa: 4.1.0
@@ -3269,7 +3269,7 @@ packages:
       update-notifier: 6.0.2
     dev: true
 
-  /@quasar/quasar-app-extension-testing-e2e-cypress@5.2.0(@babel/core@7.23.9)(@babel/preset-env@7.23.9)(babel-loader@9.1.3)(cypress@13.6.4)(eslint-plugin-cypress@2.15.1)(vite@2.9.17)(webpack@5.90.0):
+  /@quasar/quasar-app-extension-testing-e2e-cypress@5.2.0(@babel/core@7.23.9)(@babel/preset-env@7.23.9)(babel-loader@9.1.3)(cypress@13.7.3)(eslint-plugin-cypress@2.15.1)(vite@2.9.17)(webpack@5.90.0):
     resolution: {integrity: sha512-Fb8TXPo3uG2tRoSjxNb+3VnKXKZDU+lf8hkKWpzlbDUiMAqZYvHCgXKIaC+Kwm2L1+y9ky4+Pg1nPpfNIBpfcg==}
     engines: {node: ^14.13.0 || ^16.0.0 || >= 18.0.0, npm: '>= 6.14.12', yarn: '>= 1.17.3'}
     peerDependencies:
@@ -3279,9 +3279,9 @@ packages:
       eslint-plugin-cypress:
         optional: true
     dependencies:
-      '@cypress/code-coverage': 3.12.19(@babel/core@7.23.9)(@babel/preset-env@7.23.9)(babel-loader@9.1.3)(cypress@13.6.4)(webpack@5.90.0)
+      '@cypress/code-coverage': 3.12.19(@babel/core@7.23.9)(@babel/preset-env@7.23.9)(babel-loader@9.1.3)(cypress@13.7.3)(webpack@5.90.0)
       cross-env: 7.0.3
-      cypress: 13.6.4
+      cypress: 13.7.3
       eslint-plugin-cypress: 2.15.1(eslint@8.56.0)
       lodash: 4.17.21
       nyc: 15.1.0
@@ -6404,8 +6404,8 @@ packages:
   /csstype@3.1.3:
     resolution: {integrity: sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==}
 
-  /cypress@13.6.4:
-    resolution: {integrity: sha512-pYJjCfDYB+hoOoZuhysbbYhEmNW7DEDsqn+ToCLwuVowxUXppIWRr7qk4TVRIU471ksfzyZcH+mkoF0CQUKnpw==}
+  /cypress@13.7.3:
+    resolution: {integrity: sha512-uoecY6FTCAuIEqLUYkTrxamDBjMHTYak/1O7jtgwboHiTnS1NaMOoR08KcTrbRZFCBvYOiS4tEkQRmsV+xcrag==}
     engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
     hasBin: true
     requiresBuild: true
@@ -14306,6 +14306,21 @@ packages:
     dependencies:
       vue: 3.4.15(typescript@5.3.3)
 
+  /vue-demi@0.14.7(vue@3.4.15):
+    resolution: {integrity: sha512-EOG8KXDQNwkJILkx/gPcoL/7vH+hORoBaKgGe+6W7VFMvCYJfmF2dGbvgDroVnI8LU7/kTu8mbjRZGBU1z9NTA==}
+    engines: {node: '>=12'}
+    hasBin: true
+    requiresBuild: true
+    peerDependencies:
+      '@vue/composition-api': ^1.0.0-rc.1
+      vue: ^3.0.0-0 || ^2.6.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+    dependencies:
+      vue: 3.4.15(typescript@5.3.3)
+    dev: false
+
   /vue-eslint-parser@9.4.2(eslint@8.56.0):
     resolution: {integrity: sha512-Ry9oiGmCAK91HrKMtCrKFWmSFWvYkpGglCeFAIqDdr9zdXmMMpJOmUJS7WWsW7fX81h6mwHmUZCQQ1E0PkSwYQ==}
     engines: {node: ^14.17.0 || >=16.0.0}
@@ -14345,7 +14360,7 @@ packages:
         optional: true
     dependencies:
       vue: 3.4.15(typescript@5.3.3)
-      vue-demi: 0.14.6(vue@3.4.15)
+      vue-demi: 0.14.7(vue@3.4.15)
     dev: false
 
   /vue-router@4.2.5(vue@3.4.15):
