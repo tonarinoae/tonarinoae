@@ -1,4 +1,6 @@
 import transformerDirectives from "@unocss/transformer-directives"
+import transformerVariantGroup from "@unocss/transformer-variant-group"
+import { presetScrollbar } from "unocss-preset-scrollbar"
 import { presetOnu } from "onu-ui"
 import {
   defineConfig,
@@ -17,14 +19,16 @@ export default defineConfig({
       prefix: "un-",
       prefixedOnly: true // <--
     }),
-    presetTypography()
+    presetTypography(),
+    presetScrollbar()
   ],
   rules: [
     [/^size-\[?([^[\]]+)\]?/, ([, value]) => ({ width: value, height: value })],
     [/^font-family-(.+)/, ([, value]) => ({ "font-family": value })],
-    [/^font-size-(.+)/, ([, value]) => ({ "font-size": value })]
+    [/^font-size-(.+)/, ([, value]) => ({ "font-size": value })],
+    [/^grid-area-(.+)/, ([, value]) => ({ "grid-area": value })]
   ],
-  transformers: [transformerDirectives()],
+  transformers: [transformerDirectives(), transformerVariantGroup()],
   theme: {
     breakpoints: {
       sm: "600px",

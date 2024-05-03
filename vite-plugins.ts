@@ -55,8 +55,13 @@ export const vitePlugins: [
         "vue-router",
         // VueRouterAutoImports,
         {
-         "@vueuse/core": ["computedAsync", "watchImmediate", "useStorage"],
-         quasar: ["useQuasar"],
+          "@vueuse/core": [
+            "computedAsync",
+            "watchImmediate",
+            "useStorage",
+            "useEventListener"
+          ],
+          quasar: ["useQuasar"],
           "vue-request": ["useRequest"],
           "vue-i18n": ["useI18n"]
         },
@@ -80,10 +85,7 @@ export const vitePlugins: [
   [
     Components,
     {
-      resolvers: [
-        IconsResolver(),
-        OnuResolver(),
-      ]
+      resolvers: [IconsResolver(), OnuResolver()]
     }
   ],
   [DefineOptions, {}],

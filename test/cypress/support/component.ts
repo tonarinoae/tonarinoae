@@ -41,7 +41,7 @@ const { config } = VueTestUtils
 // For example use the actual i18n instance or mock it
 // config.global.plugins.push(i18n);
 config.global.mocks = {
-  $t: () => "",
+  $t: () => ""
 }
 
 // Overwrite the transition and transition-group stubs which are stubbed by test-utils by default.

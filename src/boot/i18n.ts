@@ -1,4 +1,3 @@
- 
 import { boot } from "quasar/wrappers"
 import { loadLocalize } from "src/i18n"
 import enUS from "src/i18n/messages/en-US.json"
@@ -15,7 +14,6 @@ declare module "vue-i18n" {
   // define the number format schema
   export interface DefineNumberFormat {}
 }
- 
 
 export const i18n = createI18n({
   fallbackLocale: "en-US",

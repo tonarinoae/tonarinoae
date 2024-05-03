@@ -16,12 +16,14 @@
       "unplugin-vue-define-options/macros-global",
       "onu-ui/volar"
     ],
+    "paths": {
+      "logic/*": ["src/logic/*"],
+      "api/*": ["src/api/*"]
+    },
     "esModuleInterop": true,
     "lib": ["esnext", "DOM"]
   },
-  "exclude": [
-    "./quasar.config.js"
-  ],
+  "exclude": ["./quasar.config.js"],
   "vueCompilerOptions": {
     "target": 3, // or 2.7 for Vue 2
     "plugins": [
