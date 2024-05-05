@@ -1,6 +1,6 @@
 // import { Http } from "client-ext-animevsub-helper"
 
-import { RouteLocationRaw } from "vue-router"
+import type { RouteLocationRaw } from "vue-router"
 
 const API_URL = "https://ihentai.xyz/api"
 
@@ -178,7 +178,7 @@ export interface Episode {
 
 export interface Search {
   count: number
-  videos: Episode[]
+  videos: Video[]
 }
 
 /**

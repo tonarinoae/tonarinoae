@@ -49,13 +49,15 @@
           v-model:current-time="hCurrentTime"
           v-model:playing="hPlaying"
           v-model:volume="hVolume"
+          v-model:playback="hPlayback"
           :support-pip="activePip"
           v-model:pip="hPip"
           v-model:fullscreen="hFullscreen"
-          :current-time="hCurrentTime"
           :duration="hDuration"
-          :addNotice
-          :addKeybinding
+          :levels
+          v-model:level="currentLevel"
+          :add-notice
+          :add-keybinding
           :resource-loaded="hResourceLoaded"
           :class="{
             'desktop-mode': isDesktop
@@ -94,10 +96,10 @@
 </template>
 
 <script lang="ts" setup>
-import { getStreamInfo } from "api"
-import Hls from "hls.js"
-import workerHls from "hls.js/dist/hls.worker?url"
 import { useEventListener } from "@vueuse/core"
+import { getStreamInfo } from "api/index"
+import Hls, { Level } from "hls.js"
+import workerHls from "hls.js/dist/hls.worker?url"
 
 const props = defineProps<{
   src: string
@@ -110,8 +112,10 @@ const meta = computedAsync(() => getStreamInfo(hash.value), undefined, {
 })
 
 const videoRef = ref<HTMLVideoElement>()
+const levels = shallowReactive<Level[]>([])
+const currentLevel = ref(0)
 
-watch([videoRef, meta], ([video, meta]) => {
+watch([videoRef, meta], ([video, meta], _, onCleanup) => {
   if (!video || !meta) return
   const hls = new Hls({
     debug: false && import.meta.env.DEV,
@@ -119,15 +123,35 @@ watch([videoRef, meta], ([video, meta]) => {
     progressive: true
   })
 
+  hls.on(Hls.Events.MANIFEST_PARSED, (event, data) => {
+    levels.splice(0)
+    levels.push(...data.levels)
+    currentLevel.value = hls.nextLevel = data.levels.length - 1
+  })
+  hls.on(Hls.Events.LEVEL_SWITCHED, (event, data) => {
+    console.log("change level ", data)
+    currentLevel.value = data.level
+  })
+
   hls.loadSource(meta.hls[0].url)
   hls.attachMedia(video)
 
-  if (hPlaying.value) video.play()
+  const watcher = watch(currentLevel, (level) => {
+    console.log("change quality ")
+    hls.nextLevel = level
+  })
+  console.log(hls)
+  if (hPlaying.value) void video.play()
+
+  onCleanup(() => {
+    hls.destroy()
+    watcher()
+  })
 })
 
 const { ref: hPlaying, raw: $hPlaying } = refSync((val) => {
   if (val) {
-    videoRef.value?.play()
+    void videoRef.value?.play()
   } else {
     videoRef.value?.pause()
     hControlShow.value = true
@@ -144,6 +168,7 @@ const { ref: hCurrentTime, raw: $hCurrentTime } = refSync((val) => {
 }, 0)
 const { ref: hPlayback, raw: $hPlayback } = refSync((val) => {
   if (videoRef.value) videoRef.value.playbackRate = val
+  addNotice(`Tốc độ phát ${val}x`)
   return true
 }, 1)
 const { ref: hVolume, raw: $hVolume } = refSync((val) => {
@@ -228,6 +253,7 @@ export type AddKeybinding = typeof addKeybinding
 // ============== /keybinding ==============
 
 defineExpose({ fullscreen: hFullscreen })
+provide("fullscreen", hFullscreen)
 </script>
 
 <style lang="scss" scoped>

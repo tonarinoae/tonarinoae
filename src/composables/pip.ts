@@ -1,6 +1,6 @@
 import type { MaybeRef } from "@vueuse/core"
 
-export function usePip(videoRef: MaybeRef<HTMLVideoElement>) {
+export function usePip(videoRef: MaybeRef<HTMLVideoElement|undefined>) {
   if (!isRef(videoRef)) videoRef = ref(videoRef)
 
   const state = ref(false)
@@ -22,9 +22,9 @@ export function usePip(videoRef: MaybeRef<HTMLVideoElement>) {
     get: () => state.value,
     set: (val) => {
       if (val) {
-        videoRef.value?.requestPictureInPicture()
+        void videoRef.value?.requestPictureInPicture()
       } else {
-        document.exitPictureInPicture()
+        void document.exitPictureInPicture()
       }
     }
   })
