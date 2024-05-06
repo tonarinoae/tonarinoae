@@ -49,12 +49,7 @@
             <span>Enter</span>
           </button>
         </li>
-        <li
-          v-if="loading"
-          v-for="video in 20"
-          :key="video"
-          class="pa-4"
-        >
+        <li v-if="loading" v-for="video in 20" :key="video" class="pa-4">
           <card-vertical-skeleton horizontal />
         </li>
         <li

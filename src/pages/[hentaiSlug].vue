@@ -15,7 +15,7 @@
           v-if="data"
           :src="data.video.links[0]"
           ref="playerRef"
-          :is-desktop
+          :is-desktop="!$q.platform.is.mobile"
           :class="{
             'mx-4': !fullscreenOrLtMd
           }"
@@ -74,10 +74,24 @@
             </q-btn>
           </template>
         </player>
+        <q-responsive
+          v-else
+          :ratio="16 / 9"
+          class="bg-#000"
+          :class="{
+            'mx-4': !fullscreenOrLtMd
+          }"
+        >
+          <div
+            class="absolute top-0 left-0 w-full h-full flex items-center justify-center pointer-events-none z-200"
+          >
+            <q-spinner size="60px" :thickness="3" />
+          </div>
+        </q-responsive>
 
         <div class="row">
           <div
-            v-if="data"
+            v-if="data && !error"
             class="px-4 col-12"
             :class="{
               'col-sm-8': fullscreenOrLtMd,
@@ -247,6 +261,109 @@
             </div>
           </div>
           <div
+            v-else-if="!error"
+            class="px-4 col-12"
+            :class="{
+              'col-sm-8': fullscreenOrLtMd,
+              'col-sm-12': !fullscreenOrLtMd || $q.screen.width <= 625
+            }"
+          >
+            <q-skeleton
+              type="text"
+              class="text-h6 text-20px w-60% mt-2 line-clamp-3"
+            />
+
+            <div class="flex md:flex-nowrap justify-between">
+              <div>
+                <q-skeleton type="text" class="text-sm w-180px" />
+
+                <!-- basic info -->
+                <div class="text-gray-400 text-sm mt-3 flex items-center">
+                  <q-skeleton type="text" class="text-sm w-4em" />
+
+                  <span class="inline-block h-1em w-1px bg-#fff/20 mx-2" />
+
+                  <q-skeleton type="text" class="text-sm w-6em" />
+
+                  <span class="inline-block h-1em w-1px bg-#fff/20 mx-2" />
+                </div>
+              </div>
+
+              <div class="flex items-center justify-end pt-3 md:pt-0">
+                <q-skeleton
+                  type="QBtn"
+                  no-caps
+                  rounded
+                  unelevated
+                  class="mr-4 text-weight-normal rounded-30px"
+                />
+
+                <q-skeleton
+                  type="QBtn"
+                  no-caps
+                  rounded
+                  unelevated
+                  class="mr-4 text-weight-normal rounded-30px"
+                />
+
+                <q-skeleton
+                  type="QBtn"
+                  no-caps
+                  rounded
+                  unelevated
+                  class="mr-4 text-weight-normal rounded-30px"
+                />
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <q-skeleton type="text" class="text-sm w-19em" />
+              <q-skeleton type="text" class="text-sm w-6em" />
+            </div>
+            <!-- /basic info-->
+
+            <!-- genres -->
+            <div class="mx--1 mt-3">
+              <q-skeleton
+                class="inline-block mx-1"
+                type="QChip"
+                v-for="item in 3 + Math.round(7 * Math.random())"
+                :key="item"
+                :style="{
+                  width: 3 + 5 * Math.random() + 'em'
+                }"
+              />
+            </div>
+            <!-- /gerens -->
+
+            <h6 v-if="$q.screen.width >= 625" class="text-16px mt-4">
+              <q-skeleton type="text" class="text-16px w-90px" />
+            </h6>
+            <div v-if="$q.screen.width >= 625" class="flex flex-nowrap">
+              <div>
+                <q-responsive :ratio="3 / 4" class="w-170px rounded-xl">
+                  <q-skeleton type="rect" class="absolute fit" />
+                </q-responsive>
+              </div>
+              <div class="ml-4 w-full">
+                <p
+                  class="text-14px leading-loose whitespace-pre-wrap text-[#9a9a9a]"
+                >
+                  <q-skeleton type="text" class="w-full" />
+                  <q-skeleton type="text" class="w-full" />
+                  <q-skeleton type="text" class="w-1/2" />
+                </p>
+              </div>
+            </div>
+          </div>
+          <div v-else class="text-center col-12 py-8 px-6">
+            <code class="block">{{ error }}</code>
+
+            <q-btn rounded color="blue" no-caps class="mt-3" @click="refresh"
+              >Thử lại</q-btn
+            >
+          </div>
+          <div
             v-if="fullscreenOrLtMd"
             class="col-12 col-sm-4"
             :class="{
@@ -288,6 +405,7 @@
           <!-- /playlist series -->
 
           <div
+            v-if="data"
             v-for="section in data?.sections"
             :key="section.title"
             class="mt-6"
@@ -314,6 +432,22 @@
                 }"
               >
                 <card-vertical :video :horizontal="$q.screen.width > 960" />
+              </div>
+            </div>
+          </div>
+          <div v-else v-for="section in 3" :key="section" class="mt-6">
+            <q-skeleton type="text" class="text-h6 w-110px" />
+
+            <div class="row">
+              <div
+                v-for="video in 10"
+                :key="video"
+                class="col-12 px-2 py-3"
+                :class="{
+                  '!w-1/2': $q.screen.width > 500 && $q.screen.width < 625
+                }"
+              >
+                <card-vertical-skeleton :horizontal="$q.screen.width > 960" />
               </div>
             </div>
           </div>
@@ -346,9 +480,12 @@ const fullscreenOrLtMd = computed(() => {
   return $q.screen.lt.md
 })
 
-const { data, loading, error } = useRequest(() => getWatch(props.hentaiSlug), {
-  refreshDeps: () => props.hentaiSlug
-})
+const { data, loading, error, refresh } = useRequest(
+  () => getWatch(props.hentaiSlug),
+  {
+    refreshDeps: () => props.hentaiSlug
+  }
+)
 // /search?page=1&limit=24&orderby=date&order=desc&tags=slime-living-together&searchBy=slug
 const series = computedAsync(
   () => {
