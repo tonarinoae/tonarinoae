@@ -94,7 +94,7 @@
     "@types/node": "20.11.13",
     "@types/serviceworker": "^0.0.82",
     "@typescript-eslint/eslint-plugin": "^6.20.0",
-    "@typescript-eslint/parser": "^6.20.0",
+    "@typescript-eslint/parser": "^7.8.0",
     "@unocss/transformer-directives": "^0.58.4",
     "@unocss/transformer-variant-group": "^0.59.4",
     "@vitest/ui": "^1.2.2",
