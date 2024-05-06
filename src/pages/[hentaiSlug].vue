@@ -8,7 +8,7 @@
       <div
         class="col-8"
         :class="{
-          'col-12': playerRef?.fullscreen
+          'col-12': fullscreenOrLtMd
         }"
       >
         <player
@@ -17,11 +17,21 @@
           ref="playerRef"
           :is-desktop
           :class="{
-            'mx-4': !playerRef?.fullscreen
+            'mx-4': !fullscreenOrLtMd
           }"
         >
           <template #toolbar-top-left>
-            <q-btn v-if="!isDesktop" flat round>
+            <q-btn
+              v-if="!$q.platform.is.mobile"
+              flat
+              round
+              @click.stop="
+                playerRef?.fullscreen
+                  ? (playerRef.fullscreen = false)
+                  : $router.back()
+              "
+              class="ml--2"
+            >
               <i-fluent-chevron-down-24-regular class="size-1.5em" />
             </q-btn>
 
@@ -29,7 +39,8 @@
               <h1
                 class="text-18px leading-normal font-600 truncate"
                 :class="{
-                  'text-25px': playerRef?.fullscreen
+                  'text-20px': $q.screen.width > 617 && fullscreenOrLtMd,
+                  'text-25px': $q.screen.width > 814 && fullscreenOrLtMd
                 }"
               >
                 {{ data.video.tags[0]?.name ?? data.video.title }}
@@ -37,7 +48,8 @@
               <h3
                 class="text-16px leading-normal truncate"
                 :class="{
-                  'text-20px': playerRef?.fullscreen
+                  'text-18px': $q.screen.width > 617 && fullscreenOrLtMd,
+                  'text-20px': $q.screen.width > 814 && fullscreenOrLtMd
                 }"
               >
                 Tập {{ getEpisodeName(data.video) }}
@@ -47,6 +59,7 @@
 
           <template #btn-next>
             <q-btn
+              v-if="!$q.screen.lt.sm"
               flat
               round
               dense
@@ -65,17 +78,17 @@
         <div class="row">
           <div
             v-if="data"
-            class="px-4"
+            class="px-4 col-12"
             :class="{
-              'col-8': playerRef?.fullscreen,
-              'col-12': !playerRef?.fullscreen
+              'col-sm-8': fullscreenOrLtMd,
+              'col-sm-12': !fullscreenOrLtMd || $q.screen.width <= 625
             }"
           >
             <h1 class="text-h6 20px mt-2 line-clamp-3">
               {{ data.video.title }}
             </h1>
 
-            <div class="flex flex-nowrap justify-between">
+            <div class="flex md:flex-nowrap justify-between">
               <div>
                 <span class="text-sm text-gray-400">
                   {{ convertNumber(data.video.views) }} lượt xem
@@ -126,7 +139,7 @@
                 </div>
               </div>
 
-              <div class="flex items-center justify-end">
+              <div class="flex items-center justify-end pt-3 md:pt-0">
                 <q-btn
                   no-caps
                   rounded
@@ -213,8 +226,10 @@
             </div>
             <!-- /gerens -->
 
-            <h6 class="text-16px mt-4">Giới thiệu</h6>
-            <div class="flex flex-nowrap">
+            <h6 v-if="$q.screen.width >= 625" class="text-16px mt-4">
+              Giới thiệu
+            </h6>
+            <div v-if="$q.screen.width >= 625" class="flex flex-nowrap">
               <div>
                 <q-img
                   :src="data.video.thumbnail"
@@ -231,7 +246,14 @@
               </div>
             </div>
           </div>
-          <div v-if="playerRef?.fullscreen" class="col-4" ref="siloRef" />
+          <div
+            v-if="fullscreenOrLtMd"
+            class="col-12 col-sm-4"
+            :class="{
+              'col-sm-12': !fullscreenOrLtMd || $q.screen.width <= 625
+            }"
+            ref="siloRef"
+          />
         </div>
       </div>
 
@@ -239,27 +261,25 @@
         <div
           class="col-4"
           :class="{
-            'pl-0 pr-4': playerRef?.fullscreen
+            'px-4': fullscreenOrLtMd || $q.screen.width <= 625
           }"
         >
           <!-- playlist series -->
-          <div
-            v-if="series"
-            class="bg-gray-700 bg-opacity-20 rounded-xl px-4 pt-3"
-          >
+          <div v-if="series" class="bg-#a1a1a1/10 rounded-xl px-4 pt-3">
             <h1 class="col-12 text-h6 px-2 flex items-center justify-between">
               Danh sách phát ({{ series.count }})
             </h1>
 
-            <div class="mx--4">
+            <div class="mx--4 row">
               <card-vertical
                 v-for="video in series.videos"
                 :key="video.id"
                 :video
-                horizontal
-                class="py-3 px-4"
+                :horizontal="$q.screen.width > 960 || $q.screen.width < 625"
+                class="py-3 px-4 col-12"
                 :class="{
-                  'bg-gray-700 bg-opacity-60 rounded-xl':
+                  // '!w-1/2': $q.screen.width > 500 && ($q.screen.width < 625),
+                  'bg-#a1a1a1/20 rounded-xl':
                     router.resolve(video.slug).fullPath === route.fullPath
                 }"
               />
@@ -270,9 +290,9 @@
           <div
             v-for="section in data?.sections"
             :key="section.title"
-            class="row mt-6"
+            class="mt-6"
           >
-            <h1 class="col-12 text-h6 px-2 flex items-center justify-between">
+            <h1 class="text-h6 flex items-center justify-between">
               {{ section.title }}
 
               <router-link
@@ -284,12 +304,17 @@
               </router-link>
             </h1>
 
-            <div
-              v-for="video in section.videos"
-              :key="video.id"
-              class="col-12 px-2 py-3"
-            >
-              <card-vertical :video horizontal />
+            <div class="row">
+              <div
+                v-for="video in section.videos"
+                :key="video.id"
+                class="col-12 px-2 py-3"
+                :class="{
+                  '!w-1/2': $q.screen.width > 500 && $q.screen.width < 625
+                }"
+              >
+                <card-vertical :video :horizontal="$q.screen.width > 960" />
+              </div>
             </div>
           </div>
         </div>
@@ -310,12 +335,16 @@ const props = defineProps<{
 }>()
 const router = useRouter()
 const route = useRoute()
-
-const isDesktop = computed(() => true)
+const $q = useQuasar()
 
 const siloRef = ref<HTMLDivElement>()
 
 const playerRef = ref<InstanceType<typeof Player>>()
+const fullscreenOrLtMd = computed(() => {
+  if (playerRef.value?.fullscreen) return true
+
+  return $q.screen.lt.md
+})
 
 const { data, loading, error } = useRequest(() => getWatch(props.hentaiSlug), {
   refreshDeps: () => props.hentaiSlug

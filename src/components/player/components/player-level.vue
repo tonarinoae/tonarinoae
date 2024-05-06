@@ -7,7 +7,7 @@
     class="d-action"
     @click="showMenu = !showMenu"
   >
-    {{ playback }}x
+    <i-system-uicons-filtering class="size-1.7em" />
     <menu-responsive
       v-model="showMenu"
       @update:model-value="setHiddenTooltip"
@@ -20,18 +20,22 @@
       }"
     >
       <q-list>
-        <q-item-label header class="pb-0">Tốc độ phát</q-item-label>
+        <q-item-label header class="pb-0">Chất lượng phát</q-item-label>
+
         <q-item
-          v-for="{ name, value } in playbacks"
-          :key="value"
-          class="bg-opacity-10 rounded-xl text-center text-#fff text-opacity-80"
+          v-for="(item, id) in levels"
+          :key="id"
+          class="bg-opacity-10 rounded-xl text-#fff text-opacity-80"
           :class="{
-            '!text-opacity-100 text-pink-400': value === playback
+            '!text-opacity-100 text-pink-400': level === id
           }"
           clickable
-          @click="playback = value"
+          @click="level = id"
         >
-          <q-item-section>{{ name }}</q-item-section>
+          <q-item-section avatar />
+          <q-item-section>
+            <q-item-label>{{ item.height }}p</q-item-label>
+          </q-item-section>
         </q-item>
       </q-list>
     </menu-responsive>
@@ -39,9 +43,11 @@
 </template>
 
 <script lang="ts" setup>
-import { playbacks } from "src/constants"
+defineProps<{
+  levels: Level[]
+}>()
 
-const playback = defineModel<number>("modelValue", { required: true })
+const level = defineModel<number>("modelValue", { required: true })
 
 const fullscreen = inject("fullscreen", false)
 const setHiddenTooltip = inject("setHiddenTooltip", NOOP)

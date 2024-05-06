@@ -3,7 +3,8 @@
     :ratio="16 / 9"
     class="bg-#000 dplayer"
     :class="{
-      '!h-screen !w-screen fullscreen-mode': hFullscreen
+      '!h-screen !w-screen fullscreen-mode': hFullscreen,
+      'is-mobile': $q.platform.is.mobile
     }"
   >
     <video
@@ -26,14 +27,17 @@
       @waiting="hLoading = true"
       @ended="onEnd"
       @mousemove="resetTimeDelayControl(), (hControlShow = true)"
-      @click="hPlaying = !hPlaying"
     />
+    <div class="absolute size-100% top-0 left-0" @click="onClickBackdrop" />
 
     <transition name="q-transition--fade" :duration="333">
       <div
         v-show="hControlShow"
         class="d-container desktop absolute size-100% top-0 left-0"
-        @click="hPlaying = !hPlaying"
+        :class="{
+          '!bg-#000/50': $q.platform.is.mobile
+        }"
+        @click="onClickBackdrop"
       >
         <player-header
           :class="{
@@ -44,6 +48,20 @@
             <slot name="toolbar-top-left" />
           </template>
         </player-header>
+        <div
+          v-if="$q.platform.is.mobile"
+          class="absolute left-0 top-1/2 w-full translate-y--1/2 flex items-center justify-center z-30"
+        >
+          <q-btn
+            round
+            flat
+            class="text-20px"
+            @click.stop="hPlaying = !hPlaying"
+          >
+            <i-pajamas-pause v-if="hPlaying" class="size-3em" />
+            <i-pajamas-play v-else class="size-3em" />
+          </q-btn>
+        </div>
 
         <player-footer
           v-model:current-time="hCurrentTime"
@@ -73,7 +91,7 @@
     <transition-group
       tag="div"
       name="notices"
-      class="notices absolute bottom-[40%] left-0 w-full flex column justify-end ml-10 text-[14px] pointer-events-none"
+      class="notices absolute bottom-[40%] left-0 w-full flex column justify-end pl-10 text-[14px] pointer-events-none"
     >
       <div v-for="item in notices" :key="item.id" class="pb-2">
         <span
@@ -98,13 +116,15 @@
 <script lang="ts" setup>
 import { useEventListener } from "@vueuse/core"
 import { getStreamInfo } from "api/index"
-import Hls, { Level } from "hls.js"
+import type { Level } from "hls.js"
+import Hls from "hls.js"
 import workerHls from "hls.js/dist/hls.worker?url"
 
 const props = defineProps<{
   src: string
   isDesktop?: boolean
 }>()
+const $q = useQuasar()
 
 const hash = computed(() => props.src.slice(props.src.indexOf("/play/") + 6))
 const meta = computedAsync(() => getStreamInfo(hash.value), undefined, {
@@ -199,6 +219,15 @@ function onCanPlay() {
 }
 function onEnd() {}
 
+function onClickBackdrop() {
+  if ($q.platform.is.mobile) {
+    resetTimeDelayControl()
+    hControlShow.value = !hControlShow.value
+  } else {
+    hPlaying.value = !hPlaying.value
+  }
+}
+
 // ============== notice ===============
 const notices = shallowReactive<
   {
@@ -252,8 +281,12 @@ function addKeybinding(
 export type AddKeybinding = typeof addKeybinding
 // ============== /keybinding ==============
 
+const hiddenTooltip = ref(false)
+
 defineExpose({ fullscreen: hFullscreen })
 provide("fullscreen", hFullscreen)
+provide("hiddenTooltip", hiddenTooltip)
+provide("setHiddenTooltip", (val) => (hiddenTooltip.value = val))
 </script>
 
 <style lang="scss" scoped>
@@ -274,7 +307,7 @@ provide("fullscreen", hFullscreen)
     margin-right: 0;
   }
 }
-.dplayer.fullscreen-mode :deep(.d-action) {
+.dplayer.fullscreen-mode:not(.is-mobile) :deep(.d-action) {
   margin-right: 1em;
 
   &:last-child {
@@ -282,7 +315,7 @@ provide("fullscreen", hFullscreen)
   }
 }
 
-.fullscreen-mode :deep(.q-btn) {
+.fullscreen-mode:not(.is-mobile) :deep(.q-btn) {
   @apply text-18px;
 }
 </style>

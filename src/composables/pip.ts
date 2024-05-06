@@ -1,11 +1,13 @@
 import type { MaybeRef } from "@vueuse/core"
 
-export function usePip(videoRef: MaybeRef<HTMLVideoElement|undefined>) {
+export function usePip(videoRef: MaybeRef<HTMLVideoElement | undefined>) {
   if (!isRef(videoRef)) videoRef = ref(videoRef)
 
   const state = ref(false)
   const support = ref("exitPictureInPicture" in document)
-  const enabled  = ref(support.value && (document.pictureInPictureEnabled ?? false))
+  const enabled = ref(
+    support.value && (document.pictureInPictureEnabled ?? false)
+  )
 
   watchImmediate(videoRef, (video) => {
     state.value = document.pictureInPictureElement === video
@@ -32,6 +34,6 @@ export function usePip(videoRef: MaybeRef<HTMLVideoElement|undefined>) {
   return {
     enabled,
     support,
-    state: stateOut,
+    state: stateOut
   }
 }

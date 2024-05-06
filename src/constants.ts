@@ -7,3 +7,4 @@ export const playbacks = [
   { name: "0.75x", value: 0.75 },
   { name: "0.5x", value: 0.5 }
 ]
+export const NOOP = () => {}

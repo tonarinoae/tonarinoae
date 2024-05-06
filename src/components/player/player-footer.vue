@@ -61,14 +61,26 @@
 
       <div class="mx--2 mb--1 flex items-center justify-between">
         <div class="flex items-center">
-          <q-btn flat round dense class="d-action" @click="playing = !playing">
+          <q-btn
+            v-if="!$q.platform.is.mobile"
+            flat
+            round
+            dense
+            class="d-action"
+            @click="playing = !playing"
+          >
             <i-fluent-pause-24-filled v-if="playing" class="size-1.7em" />
             <i-fluent-play-24-filled v-else class="size-1.7em" />
           </q-btn>
 
           <slot name="btn-next" />
 
-          <player-volume v-model:volume="volume" :add-notice :add-keybinding />
+          <player-volume
+            v-if="!$q.platform.is.mobile && !$q.screen.lt.sm"
+            v-model:volume="volume"
+            :add-notice
+            :add-keybinding
+          />
 
           <div
             class="ml-2"
@@ -82,7 +94,15 @@
         </div>
 
         <div class="flex items-center justify-end">
-          <player-playback v-model="playback" />
+          <player-playback
+            v-if="(!$q.platform.is.mobile && !$q.screen.lt.sm) || fullscreen"
+            v-model="playback"
+          />
+          <player-level
+            v-if="(!$q.platform.is.mobile && !$q.screen.lt.sm) || fullscreen"
+            :levels
+            v-model="level"
+          />
           <player-settings v-model="playback" :levels v-model:level="level" />
 
           <q-btn
@@ -146,7 +166,7 @@ const volume = defineModel<number>("volume", { required: true })
 const playback = defineModel<number>("playback", { required: true })
 const pip = defineModel<boolean>("pip", { required: true })
 const fullscreen = defineModel<boolean>("fullscreen", { required: true })
-const level= defineModel<number>("level", { required: true })
+const level = defineModel<number>("level", { required: true })
 
 const props = defineProps<{
   duration: number

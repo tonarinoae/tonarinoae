@@ -1,20 +1,19 @@
 <template>
-  <q-btn flat round dense class="d-action">
+  <q-btn flat round dense class="d-action" @click="showMenu = !showMenu">
     <i-fluent-settings-28-filled class="size-1.7em" />
-    <q-menu
+    <menu-responsive
       v-model="showMenu"
+      @update:model-value="setHiddenTooltip"
       anchor="top middle"
       self="bottom middle"
-      class="transparent !shadow-none min-w-223px"
+      :offset="[0, 30]"
+      class="transparent !shadow-none min-w-223px children:!bg-#000 children:!bg-opacity-70 children:backdrop-blur-5px children:rounded-xl"
       :class="{
         'text-18px': fullscreen
       }"
       ref="menuRef"
     >
-      <q-list
-        v-if="mode === 'general'"
-        class="!bg-#000 !bg-opacity-50 backdrop-blur-5px rounded-xl"
-      >
+      <q-list v-if="mode === 'general'">
         <q-item-label header class="pb-0">Cài đặt</q-item-label>
         <q-item
           v-for="item in list"
@@ -47,10 +46,7 @@
         </q-item>
       </q-list>
 
-      <q-list
-        v-else-if="mode === 'playback'"
-        class="!bg-#000 !bg-opacity-50 backdrop-blur-5px rounded-xl"
-      >
+      <q-list v-else-if="mode === 'playback'">
         <q-item class="!py-1">
           <q-item-section avatar>
             <q-btn flat round dense @click="mode = 'general'">
@@ -79,10 +75,7 @@
         </q-item>
       </q-list>
 
-      <q-list
-        v-else-if="mode === 'quality'"
-        class="!bg-#000 !bg-opacity-50 backdrop-blur-5px rounded-xl"
-      >
+      <q-list v-else-if="mode === 'quality'">
         <q-item class="!py-2">
           <q-item-section avatar class="min-w-0 pr-0 mr-2">
             <q-btn flat round :dense="!fullscreen" @click="mode = 'general'">
@@ -107,13 +100,13 @@
           clickable
           @click="level = id"
         >
-        <q-item-section avatar />
+          <q-item-section avatar />
           <q-item-section>
             <q-item-label>{{ item.height }}p</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
-    </q-menu>
+    </menu-responsive>
   </q-btn>
 </template>
 
@@ -122,14 +115,15 @@ import { QMenu } from "quasar"
 import { playbacks } from "src/constants"
 import type { Level } from "hls.js"
 
-import iHd from "~icons/fluent/hd-24-regular"
-import iPlaylist from "~icons/fluent/navigation-play-20-regular"
+import iHd from "~icons/system-uicons/filtering"
+import iPlaylist from "~icons/solar/clapperboard-open-play-linear"
 import iSpeed from "~icons/fluent/top-speed-24-regular"
 
 const playback = defineModel<number>("modelValue", { required: true })
 const level = defineModel<number>("level", { required: true })
 
 const fullscreen = inject("fullscreen", false)
+const setHiddenTooltip = inject("setHiddenTooltip", NOOP)
 
 const props = defineProps<{
   levels: Level[]
@@ -145,7 +139,7 @@ watch(showMenu, (val) => {
 const mode = ref<"general" | "playback" | "quality">("general")
 watch(mode, async () => {
   await nextTick()
-  menuRef.value?.updatePosition()
+  menuRef.value?.updatePosition?.()
 })
 
 const list: ({
