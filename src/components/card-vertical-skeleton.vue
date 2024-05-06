@@ -1,5 +1,5 @@
 <template>
-  <router-link
+  <div
     class="block relative"
     :class="{
       '!flex flex-nowrap': horizontal
@@ -25,7 +25,7 @@
       <q-skeleton type="text" width="60%" class="text-16px" />
       <q-skeleton type="text" width="100px" height="15px" />
     </div>
-  </router-link>
+  </div>
 </template>
 
 <script lang="ts" setup>
