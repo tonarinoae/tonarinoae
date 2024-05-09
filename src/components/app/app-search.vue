@@ -75,8 +75,9 @@ import { useDebounceFn } from "@vueuse/core"
 const focusing = ref(false)
 
 const query = ref("")
-const { data, loading, error, refresh } = useRequest(() =>
-  getSearch(1, 30, "date", "desc", "", { s: query.value })
+const { data, loading, error, refresh } = useRequest(
+  () => getSearch(1, 30, "date", "desc", "", { s: query.value }),
+  { manual: true }
 )
 
 watch(

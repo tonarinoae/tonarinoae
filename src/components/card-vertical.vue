@@ -37,7 +37,7 @@
         </div>
 
         <span
-          class="absolute left-1 bottom-1 bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-gray-700 dark:text-gray-300 !bg-opacity-80"
+          class="absolute left-1 bottom-1 bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-gray-700 dark:text-gray-300 !bg-opacity-80 truncate max-w-70%"
         >
           Tập {{ epName }}
         </span>

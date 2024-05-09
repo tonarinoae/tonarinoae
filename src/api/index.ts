@@ -243,7 +243,40 @@ export function getSearch(
 }
 
 export interface Explorer extends Array<Term> {}
-export function getExplorer(taxonomy: string): Promise<Explorer> {
+export interface Categories
+  extends Array<
+    Omit<Term, "taxonomy"> & {
+      taxonomy: "category"
+    }
+  > {}
+export interface Series
+  extends Array<
+    Omit<Term, "taxonomy"> & {
+      taxonomy: "series"
+    }
+  > {}
+export interface Studios
+  extends Array<
+    Omit<Term, "taxonomy"> & {
+      taxonomy: "studio"
+    }
+  > {}
+export interface ReleaseYears
+  extends Array<
+    Omit<Term, "taxonomy"> & {
+      taxonomy: "release_year"
+    }
+  > {}
+
+export interface Taxonomies {
+  category: Categories
+  series: Series
+  studio: Studios
+  release_year: ReleaseYears
+}
+export function getExplorer<Taxonomy extends keyof Taxonomies>(
+  taxonomy: Taxonomy
+): Promise<Taxonomies[Taxonomy]> {
   return fetchPolyfill(`${API_URL}/terms?taxonomy=${taxonomy}`).then((res) =>
     res.json()
   )
