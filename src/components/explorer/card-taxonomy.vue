@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-rgb(33,33,33) text-white !rounded-4px overflow-hidden">
+  <div class="bg-rgb(33,33,33) text-white !rounded-4px overflow-hidden hover:scale-105 hover:transition-transform">
     <div class="relative">
       <q-img no-spinner :src="taxonomy.thumbnail" :ratio="213 / 164" />
       <div
