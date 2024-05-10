@@ -1,5 +1,7 @@
-<route lang="toml">
-  name = "hentai"
+<route lang="yaml">
+name: hentai
+meta:
+  hideDrawer: true
 </route>
 
 <template>

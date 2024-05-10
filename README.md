@@ -81,6 +81,8 @@ See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-
 | hentai-vietsub | [x]       | [x]    | [ ] |                                    |
 | hentai-3d      | [x]       | [x]    | [ ] |                                    |
 | uncennsored    | [x]       | [x]    | [ ] |                                    |
+| history        | [ ]       | [ ]    | [ ] |                                    |
+| favorite       | [ ]       | [ ]    | [ ] |                                    |
 
 #### Components
 
@@ -88,7 +90,7 @@ See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-
 | ------------- | --------- | ------ | --- |
 | header        | [x]       | [ ]    | [ ] |
 | toolar bottom | [ ]       | [ ]    | [ ] |
-| menu sheet    | [ ]       | [ ]    | [ ] |
+| menu sheet    | [x]       | [ ]    | [ ] |
 
 #### Features more
 
