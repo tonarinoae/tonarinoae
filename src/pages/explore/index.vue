@@ -7,7 +7,7 @@ name: explore
     <div class="row sm:mx-12 md:mx-24 mb-8">
       <div v-for="banner in banners" :key="banner.name" class="col-3 px-1">
         <router-link
-        :to="banner.to"
+          :to="banner.to"
           class="block relative rounded-xl overflow-hidden hover:scale-105 hover:transition-transform"
         >
           <q-img no-spinner :ratio="95 / 179" :src="banner.image" />
@@ -30,8 +30,7 @@ name: explore
               {{ banner.capt }}
             </p>
           </div>
-
-      </router-link>
+        </router-link>
       </div>
     </div>
 
@@ -48,38 +47,38 @@ name: explore
           '!grid-cols-5': $q.screen.width >= 1280
         }"
       >
-        <router-link v-for="taxonomy in taxonomyStore.categories" :key="taxonomy.id"
-          :to="{ name: 'category', params: { slug: taxonomy.slug }}">
-
+        <router-link
+          v-for="taxonomy in taxonomyStore.categories"
+          :key="taxonomy.id"
+          :to="{ name: 'category', params: { slug: taxonomy.slug } }"
+        >
           <card-taxonomy :taxonomy />
         </router-link>
       </div>
     </div>
-
 
     <div class="mb-8">
       <div
         class="border-t-8 border-t-white/80 rounded mb-5"
         style="width: 15vw"
       />
-      <h2 class="text-3xl sm:text-4xl font-bold sm:font-extrabold">HÃNG PHIM</h2>
+      <h2 class="text-3xl sm:text-4xl font-bold sm:font-extrabold">
+        HÃNG PHIM
+      </h2>
 
       <div class="mx--2 mt-3">
         <router-link
-        v-for="genre in taxonomyStore.studios"
+          v-for="genre in taxonomyStore.studios"
           :key="genre.id"
-          :to="{ name: 'studio', params: { slug: genre.slug }}">
-
-
-        <taxonomy-item
-          class="cursor-pointer"
-          :genre
-          color="grey-9"
-          no-tooltip
-        />
-
-          </router-link>
-
+          :to="{ name: 'studio', params: { slug: genre.slug } }"
+        >
+          <taxonomy-item
+            class="cursor-pointer"
+            :genre
+            color="grey-9"
+            no-tooltip
+          />
+        </router-link>
       </div>
     </div>
   </q-page>
@@ -105,11 +104,11 @@ const banners = [
     image: top_views,
     icon: iconHot,
     to: {
-      name: 'search',
+      name: "search",
       query: {
-        orderby: 'meta_value_num',
-        order: 'desc',
-        metaKey: 'x_post_views_count'
+        orderby: "meta_value_num",
+        order: "desc",
+        metaKey: "x_post_views_count"
       }
     }
   },
@@ -119,7 +118,7 @@ const banners = [
     image: gallery,
     icon: iconGallery,
     to: {
-      name: 'gallery'
+      name: "gallery"
     }
   },
   {
@@ -128,7 +127,7 @@ const banners = [
     image: genres,
     icon: iconCategory,
     to: {
-      name: 'explore'
+      name: "explore"
     }
   },
   {
@@ -137,7 +136,7 @@ const banners = [
     image: gacha,
     icon: iconMagic,
     to: {
-      name: 'gacha'
+      name: "gacha"
     }
   }
 ]

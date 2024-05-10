@@ -61,3 +61,37 @@ quasar build
 ### Customize the configuration
 
 See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).
+
+### Progress
+
+#### Pages
+
+| Page     | Completed | Mobile | App | More                               |
+| -------- | --------- | ------ | --- | ---------------------------------- |
+| category | [x]       | [ ]    | [ ] | Catch erro, catch empty            |
+| explore  | [x]       | [ ]    | [ ] | Catch erro                         |
+| gacha    | [ ]       | [ ]    | [ ] | Catch erro                         |
+| gallery  | [ ]       | [ ]    | [ ] | Catch erro                         |
+| search   | [x]       | [ ]    | [ ] | Catch erro, catch empty            |
+| studio   | [ ]       | [ ]    | [ ] | Catch erro, catch empty            |
+| tag      | [ ]       | [ ]    | [ ] | Catch erro, catch empty            |
+| year     | [ ]       | [ ]    | [ ] | Catch erro, catch empty            |
+| index    | [x]       | [ ]    | [ ] | Catch erro                         |
+| watch    | [x]       | [x]    | [ ] | Catch erro, fix skeleton on mobile |
+
+#### Components
+
+| Component     | Completed | Mobile | App |
+| ------------- | --------- | ------ | --- |
+| header        | [x]       | [ ]    | [ ] |
+| toolar bottom | [ ]       | [ ]    | [ ] |
+| menu sheet    | [ ]       | [ ]    | [ ] |
+
+#### Features more
+
+| Feature                             | Completed |
+| ----------------------------------- | --------- |
+| Save progress watch                 | [ ]       |
+| Show series in player on fullscreen | [ ]       |
+| Follows anime system                | [ ]       |
+| Playlist anime system               | [ ]       |

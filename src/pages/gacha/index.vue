@@ -1,12 +1,9 @@
-<route lang=yaml>
+<route lang="yaml">
 name: gacha
 </route>
 
-<template>
-</template>
+<template></template>
 
-<script>
-</script>
+<script></script>
 
-<style>
-</style>
+<style></style>

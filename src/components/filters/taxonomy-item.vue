@@ -1,6 +1,7 @@
 <template>
   <q-chip size="small" clickable
-    >{{ genre.name }} <span class="text-0.85em text-yellow ml-1">{{ genre.count }}</span>
+    >{{ genre.name }}
+    <span class="text-0.85em text-yellow ml-1">{{ genre.count }}</span>
     <player-tooltip
       v-if="!noTooltip"
       class="flex flex-nowrap max-w-350px"

@@ -78,21 +78,29 @@ name: search
       </div>
 
       <q-pagination
-        v-model="current"
+        :model-value="Math.max(1, parseInt($route.query.page) ?? 0)"
         :max="Math.ceil(data.count / 24)"
         :max-pages="7"
         direction-links
         flat
+        :to-fn="(page) => ({ query: { ...$route.query, page } })"
         color="grey"
         active-color="primary"
         class="mx-auto"
       />
+
+      <q-inner-loading :showing="loading">
+        <q-spinner size="40px" />
+      </q-inner-loading>
     </div>
     <div v-else-if="!error" v-for="i in 5" :key="i" class="row mt-6">
-      <q-skeleton
-        type="text"
-        class="col-12 text-h6 px-2 flex items-center justify-between"
-      />
+      <div class="col-12 px-2">
+        <q-skeleton
+          type="text"
+          class="text-h6 flex items-center justify-between"
+          width="220px"
+        />
+      </div>
 
       <div
         v-for="video in 12"
@@ -123,8 +131,11 @@ import iconYear from "~icons/iwwa/year"
 import { usePagination } from "vue-request"
 import { getSearch } from "api/index"
 
+// import { NAvatar, NList, NListItem, NPagination, NSpin } from 'naive-ui';
+
 const taxonomyStore = useTaxonomyStore()
 const $route = useRoute()
+const $router = useRouter()
 
 const sorters = [
   {
@@ -141,32 +152,46 @@ const sorters = [
   }
 ]
 
-const { data, current, totalPage, pageSize, loading, error } = usePagination(
-  ({ page = 1, limit = 24 }) =>
-    getSearch(
-      page,
-      limit,
-      $route.query.orderby ?? "",
-      $route.query.order ?? "",
-      $route.query.metaKey ?? "",
-      {
-        studios: $route.query.studios ?? "",
-        tags: $route.query.tags ?? "",
-        years: $route.query.years ?? "",
-        genres: $route.query.genres ?? "",
-        s: $route.query.s ?? ""
-      }
-    ),
-  {
-    defaultParams: [
-      {
-        limit: 24
-      }
-    ],
-    pagination: {
-      currentKey: "page",
-      totalKey: "count"
+const { data, current, totalPage, pageSize, loading, error, refresh } =
+  usePagination(
+    ({ page = 1, limit = 24 }) =>
+      getSearch(
+        Math.max(1, parseInt($route.query.page) || 0),
+        limit,
+        $route.query.orderby ?? "",
+        $route.query.order ?? "",
+        $route.query.metaKey ?? "",
+        {
+          studios: $route.query.studios ?? "",
+          tags: $route.query.tags ?? "",
+          years: $route.query.years ?? "",
+          genres: $route.query.genres ?? "",
+          s: $route.query.s ?? ""
+        }
+      ).then((data) => Object.assign(data, { page })),
+    {
+      defaultParams: [
+        {
+          page: Math.max(1, parseInt($route.query.page) || 0),
+          limit: 24
+        }
+      ],
+      pagination: {
+        currentKey: "page",
+        totalKey: "count"
+      },
+      refreshDeps: [
+        () => $route.query.orderby,
+        () => $route.query.order,
+        () => $route.query.metaKey,
+        () => $route.query.studios,
+        () => $route.query.tags,
+        () => $route.query.years,
+        () => $route.query.genres,
+        () => $route.query.s,
+        () => $route.query.page
+      ],
+      refreshDepsAction: () => (current.value = 0)
     }
-  }
-)
+  )
 </script>

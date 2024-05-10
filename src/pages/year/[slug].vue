@@ -2,8 +2,19 @@
 name: year
 </route>
 
-<template></template>
+<template>
+  <Category
+    type="years"
+    type-tax="release_year"
+    :ignore-watch="['years']"
+    :slug
+  />
+</template>
 
-<script></script>
+<script lang="ts" setup>
+import Category from "pages/category/[slug].vue"
 
-<style></style>
+defineProps<{
+  slug: string
+}>()
+</script>

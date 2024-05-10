@@ -1,8 +1,15 @@
 <route lang="yaml">
 name: tag
 </route>
-<template></template>
 
-<script></script>
+<template>
+  <Category type="tags" type-tax="tag" :ignore-watch="['tags']" :slug />
+</template>
 
-<style></style>
+<script lang="ts" setup>
+import Category from "pages/category/[slug].vue"
+
+defineProps<{
+  slug: string
+}>()
+</script>

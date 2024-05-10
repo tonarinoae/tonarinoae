@@ -1,13 +1,9 @@
-<route lang='yaml'>
-  name: gallery
+<route lang="yaml">
+name: gallery
 </route>
 
-<template>
-  Gallery
-</template>
+<template>Gallery</template>
 
-<script>
-</script>
+<script></script>
 
-<style>
-</style>
+<style></style>
