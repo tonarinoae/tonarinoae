@@ -1,3 +1,7 @@
+<route lang="yaml">
+name: home
+</route>
+
 <template>
   <q-page class="px-1 sm:px-2 md:px-6">
     <div

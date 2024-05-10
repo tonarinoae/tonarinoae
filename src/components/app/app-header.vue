@@ -1,14 +1,21 @@
 <template>
   <q-header class="!bg-[var(--q-dark-page)] py-1 px-2">
     <q-toolbar>
-      <q-btn dense flat round icon="menu" class="mr-5" />
+      <q-btn
+        dense
+        flat
+        round
+        icon="menu"
+        class="mr-5"
+        @click="emit('click:menu')"
+      />
 
       <router-link to="/" class="flex flex-nowrap items-end">
         <img
-          src="~assets/images.png"
+          src="~assets/app_icon.png"
           width="35"
           height="35"
-          class="bg-gray-400 rounded-1/2"
+          class="hover:scale-110 hover:transition-transform"
         />
         <q-toolbar-title>iHentai</q-toolbar-title>
       </router-link>
@@ -21,6 +28,12 @@
     </q-toolbar>
   </q-header>
 </template>
+
+<script lang="ts" setup>
+const emit = defineEmits<{
+  (name: "click:menu"): void
+}>()
+</script>
 
 <style lang="scss" scoped>
 .notify {
