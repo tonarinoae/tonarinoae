@@ -68,19 +68,19 @@ See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-
 
 | Page           | Completed | Mobile | App | More                               |
 | -------------- | --------- | ------ | --- | ---------------------------------- |
-| category       | [x]       | [ ]    | [ ] | Catch erro, catch empty            |
-| explore        | [x]       | [ ]    | [ ] | Catch erro                         |
+| category       | [x]       | [x]    | [ ] | Catch erro, catch empty            |
+| explore        | [x]       | [x]    | [ ] | Catch erro                         |
 | gacha          | [ ]       | [ ]    | [ ] | Catch erro                         |
 | gallery        | [ ]       | [ ]    | [ ] | Catch erro                         |
-| search         | [x]       | [ ]    | [ ] | Catch erro, catch empty            |
-| studio         | [ ]       | [ ]    | [ ] | Catch erro, catch empty            |
-| tag            | [ ]       | [ ]    | [ ] | Catch erro, catch empty            |
-| year           | [ ]       | [ ]    | [ ] | Catch erro, catch empty            |
-| index          | [x]       | [ ]    | [ ] | Catch erro                         |
+| search         | [x]       | [x]    | [ ] | Catch erro, catch empty            |
+| studio         | [x]       | [x]    | [ ] | Catch erro, catch empty            |
+| tag            | [x]       | [x]    | [ ] | Catch erro, catch empty            |
+| year           | [x]       | [x]    | [ ] | Catch erro, catch empty            |
+| index          | [x]       | [x]    | [ ] | Catch erro                         |
 | watch          | [x]       | [x]    | [ ] | Catch erro, fix skeleton on mobile |
-| hentai-vietsub | [x]       | [ ]    | [ ] |                                    |
-| hentai-3d      | [x]       | [ ]    | [ ] |                                    |
-| uncennsored    | [x]       | [ ]    | [ ] |                                    |
+| hentai-vietsub | [x]       | [x]    | [ ] |                                    |
+| hentai-3d      | [x]       | [x]    | [ ] |                                    |
+| uncennsored    | [x]       | [x]    | [ ] |                                    |
 
 #### Components
 

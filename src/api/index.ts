@@ -306,6 +306,15 @@ export function getPostQuery(
   ).then((res) => res.json())
 }
 
+export function gacha(limit: number): Promise<Video[]> {
+  return fetchPolyfill(
+    `${API_URL}/gacha?${new URLSearchParams({
+      limit,
+      t: Date.now()
+    })}`
+  ).then((res) => res.json())
+}
+
 export interface Home {
   sections: Watch["sections"]
 }

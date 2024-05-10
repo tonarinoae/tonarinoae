@@ -76,7 +76,7 @@ name: category
           {{ mData.description }}
         </h3>
       </div>
-      <div v-else-if="!error" class="col-12 px-2">
+      <div v-else-if="!mError" class="col-12 px-2">
         <q-skeleton
           type="text"
           class="text-h6 text-26px leading-normal"

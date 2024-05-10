@@ -5,7 +5,11 @@ name: explore
 <template>
   <q-page class="px-1 sm:px-2 md:px-6">
     <div class="row sm:mx-12 md:mx-24 mb-8">
-      <div v-for="banner in banners" :key="banner.name" class="col-3 px-1">
+      <div
+        v-for="banner in banners"
+        :key="banner.name"
+        class="col-6 col-sm-3 px-1"
+      >
         <router-link
           :to="banner.to"
           class="block relative rounded-xl overflow-hidden hover:scale-105 hover:transition-transform"
