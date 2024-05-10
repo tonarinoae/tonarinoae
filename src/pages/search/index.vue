@@ -184,10 +184,13 @@ const { data, current, totalPage, pageSize, loading, error, refresh } =
         () => $route.query.orderby,
         () => $route.query.order,
         () => $route.query.metaKey,
+
         () => $route.query.studios,
         () => $route.query.tags,
         () => $route.query.years,
         () => $route.query.genres,
+        () => $route.query.series,
+
         () => $route.query.s,
         () => $route.query.page
       ],

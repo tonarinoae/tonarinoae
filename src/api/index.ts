@@ -283,20 +283,25 @@ export function getExplorer<Taxonomy extends keyof Taxonomies>(
 }
 
 export function getPostQuery(
+  page: number,
   limit: string,
   metaQuery: { key: string; value: string }[],
-  order: "desc",
+  options:
+    | { studios: string; tags: string; years: number; genres: string }
+    | { tags: string },
   orderby: "date",
-  page: number
+  order: "desc"
 ): Promise<Search> {
   return fetchPolyfill(
     `${API_URL}/post-query`,
-    new URLSearchParams({
+    JSON.stringify({
       limit,
-      metaQuery: JSON.stringify(metaQuery),
+      metaQuery,
       order,
       orderby,
-      page: page + ""
+      page: page + "",
+      years: 2023,
+      ...options
     })
   ).then((res) => res.json())
 }

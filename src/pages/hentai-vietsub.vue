@@ -1,12 +1,11 @@
 <route lang="yaml">
-name: category
+name: hentai-vietsub
 </route>
 
 <template>
   <q-page class="px-1 sm:px-2 md:px-6">
     <div>
       <filter-taxonomy
-        v-if="type !== 'genres'"
         label="Thể loại"
         :icon="iconCategory"
         :items="taxonomyStore.categories"
@@ -14,21 +13,18 @@ name: category
         enable-grid
       />
       <filter-taxonomy
-        v-if="type !== 'tags'"
         label="Series"
         :icon="iconSeries"
         :items="taxonomyStore.series"
         name="series"
       />
       <filter-taxonomy
-        v-if="type !== 'studios'"
         label="Studio"
         :icon="iconStudio"
         :items="taxonomyStore.studios"
         name="studios"
       />
       <filter-taxonomy
-        v-if="type !== 'years'"
         label="Năm"
         :icon="iconYear"
         :items="taxonomyStore.releaseYears"
@@ -64,31 +60,18 @@ name: category
       </q-btn-dropdown>
     </div>
 
-    <div v-if="data && !error" class="row mt-6">
-      <div v-if="mData && !mError" class="col-12">
+    <div class="row mt-6">
+      <div class="col-12">
         <h1 class="text-h6 text-26px px-2 leading-normal">
-          {{ mData.name }}
+          {{ title }}
           <span class="text-14px text-gray-400"
-            >({{ data.count }} kết quả)</span
+            >({{ data?.count ?? "__" }} kết quả)</span
           >
         </h1>
-        <h3 class="text-16px text-gray-300 leading-normal px-2">
-          {{ mData.description }}
-        </h3>
       </div>
-      <div v-else-if="!error" class="col-12 px-2">
-        <q-skeleton
-          type="text"
-          class="text-h6 text-26px leading-normal"
-          width="220px"
-        />
-        <q-skeleton
-          type="text"
-          class="text-16px text-gray-300 leading-normal"
-          width="130px"
-        />
-      </div>
+    </div>
 
+    <div v-if="data && !error" class="row mt-6">
       <div
         v-for="video in data.videos"
         :key="video.id"
@@ -152,20 +135,19 @@ import iconSeries from "~icons/iconoir/playlist-play"
 import iconStudio from "~icons/simple-icons/youtubestudio"
 import iconYear from "~icons/iwwa/year"
 import { usePagination } from "vue-request"
-import { getSearch, getTerm } from "api/index"
+import { getPostQuery } from "api/index"
 
 // import { NAvatar, NList, NListItem, NPagination, NSpin } from 'naive-ui';
 
-const watches = ["genres", "studios", "tags", "years"] as const
 const props = withDefaults(
   defineProps<{
-    type?: "genres" | "tags" | "studios" | "years"
-    typeTax?: string
-    ignoreWatch?: (typeof watches)[0][]
-
-    slug: string
+    title?: string
+    query?: { key: string; value: string }[]
   }>(),
-  { type: "genres", typeTax: "category", ignoreWatch: ["genres"] }
+  {
+    title: "Hentai vietsub",
+    query: [{ key: "trailer", value: "0" }]
+  }
 )
 
 const taxonomyStore = useTaxonomyStore()
@@ -187,38 +169,23 @@ const sorters = [
   }
 ]
 
-const {
-  data: mData,
-  loading: mLoading,
-  error: mError,
-  refresh: mRefresh
-} = useRequest(
-  () => {
-    return getTerm(props.typeTax, props.slug)
-  },
-  {
-    refreshDeps: [() => $route.params.slug, () => props.type],
-    refreshActions: () => mRefresh()
-  }
-)
 const { data, current, totalPage, pageSize, loading, error, refresh } =
   usePagination(
     ({ page = 1, limit = 24 }) =>
-      getSearch(
+      getPostQuery(
         Math.max(1, parseInt($route.query.page) || 0),
         limit,
-        $route.query.orderby ?? "",
-        $route.query.order ?? "",
-        $route.query.metaKey ?? "",
+        props.query,
         {
           genres: $route.query.genres ?? "",
           studios: $route.query.studios ?? "",
           tags: $route.query.tags ?? "",
           series: $route.query.series ?? "",
-          years: $route.query.years ?? "",
-          [props.type]: props.slug
+          years: $route.query.years ?? ""
         },
-        "slug"
+
+        $route.query.orderby ?? "",
+        $route.query.order ?? ""
       ).then((data) => Object.assign(data, { page })),
     {
       defaultParams: [
@@ -231,17 +198,8 @@ const { data, current, totalPage, pageSize, loading, error, refresh } =
         totalKey: "count"
       },
       refreshDeps: [
-        () => props.type,
-        () => props.slug,
         () => $route.query.orderby,
         () => $route.query.order,
-        () => $route.query.metaKey,
-
-        () =>
-          (props.ignoreWatch
-            ? watches.filter((name) => !props.ignoreWatch.includes(name))
-            : watches
-          ).map((name) => $route.query[name]),
 
         () => $route.query.genres,
         () => $route.query.studios,

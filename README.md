@@ -66,18 +66,21 @@ See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-
 
 #### Pages
 
-| Page     | Completed | Mobile | App | More                               |
-| -------- | --------- | ------ | --- | ---------------------------------- |
-| category | [x]       | [ ]    | [ ] | Catch erro, catch empty            |
-| explore  | [x]       | [ ]    | [ ] | Catch erro                         |
-| gacha    | [ ]       | [ ]    | [ ] | Catch erro                         |
-| gallery  | [ ]       | [ ]    | [ ] | Catch erro                         |
-| search   | [x]       | [ ]    | [ ] | Catch erro, catch empty            |
-| studio   | [ ]       | [ ]    | [ ] | Catch erro, catch empty            |
-| tag      | [ ]       | [ ]    | [ ] | Catch erro, catch empty            |
-| year     | [ ]       | [ ]    | [ ] | Catch erro, catch empty            |
-| index    | [x]       | [ ]    | [ ] | Catch erro                         |
-| watch    | [x]       | [x]    | [ ] | Catch erro, fix skeleton on mobile |
+| Page           | Completed | Mobile | App | More                               |
+| -------------- | --------- | ------ | --- | ---------------------------------- |
+| category       | [x]       | [ ]    | [ ] | Catch erro, catch empty            |
+| explore        | [x]       | [ ]    | [ ] | Catch erro                         |
+| gacha          | [ ]       | [ ]    | [ ] | Catch erro                         |
+| gallery        | [ ]       | [ ]    | [ ] | Catch erro                         |
+| search         | [x]       | [ ]    | [ ] | Catch erro, catch empty            |
+| studio         | [ ]       | [ ]    | [ ] | Catch erro, catch empty            |
+| tag            | [ ]       | [ ]    | [ ] | Catch erro, catch empty            |
+| year           | [ ]       | [ ]    | [ ] | Catch erro, catch empty            |
+| index          | [x]       | [ ]    | [ ] | Catch erro                         |
+| watch          | [x]       | [x]    | [ ] | Catch erro, fix skeleton on mobile |
+| hentai-vietsub | [x]       | [ ]    | [ ] |                                    |
+| hentai-3d      | [x]       | [ ]    | [ ] |                                    |
+| uncennsored    | [x]       | [ ]    | [ ] |                                    |
 
 #### Components
 
@@ -95,3 +98,4 @@ See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-
 | Show series in player on fullscreen | [ ]       |
 | Follows anime system                | [ ]       |
 | Playlist anime system               | [ ]       |
+| SEO                                 | [ ]       |
