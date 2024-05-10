@@ -4,7 +4,7 @@
       :model-value="!$q.fullscreen.isActive"
       @click:menu="showDivider = !showDivider"
     />
-    <app-divider v-model="showDivider" />
+    <app-drawer v-model="showDivider" />
 
     <q-page-container>
       <router-view />
