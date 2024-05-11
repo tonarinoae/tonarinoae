@@ -1,5 +1,9 @@
+
+  ![](src/assets/app_icon.png)
+
 となりのアニメへんたい (romaji: Tonarin no Anime Ecchi)
-This app contains source code that allows access to "adult" content so make sure you are over 18 before accessing it
+
+***This app contains source code that allows access to "adult" content so make sure you are over 18 before accessing it***
 
 ## Install the dependencies
 
