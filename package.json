@@ -97,7 +97,7 @@
     "@typescript-eslint/eslint-plugin": "^7.8.0",
     "@typescript-eslint/parser": "^7.8.0",
     "@unocss/transformer-directives": "^0.58.4",
-    "@unocss/transformer-variant-group": "^0.59.4",
+    "@unocss/transformer-variant-group": "^0.60.0",
     "@vitest/ui": "^1.2.2",
     "@vitest/web-worker": "^1.2.2",
     "@vue-macros/volar": "^0.18.11",
