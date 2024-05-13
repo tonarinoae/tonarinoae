@@ -93,7 +93,103 @@ meta:
 
         <div class="row">
           <div
-            v-if="data && !error"
+            v-if="loading"
+            class="px-4 col-12"
+            :class="{
+              'col-sm-8': fullscreenOrLtMd,
+              'col-sm-12': !fullscreenOrLtMd || $q.screen.width <= 625
+            }"
+          >
+            <q-skeleton
+              type="text"
+              class="text-h6 text-20px w-60% mt-2 line-clamp-3"
+            />
+
+            <div class="flex md:flex-nowrap justify-between">
+              <div>
+                <q-skeleton type="text" class="text-sm w-180px" />
+
+                <!-- basic info -->
+                <div class="text-gray-400 text-sm mt-3 flex items-center">
+                  <q-skeleton type="text" class="text-sm w-4em" />
+
+                  <span class="inline-block h-1em w-1px bg-#fff/20 mx-2" />
+
+                  <q-skeleton type="text" class="text-sm w-6em" />
+
+                  <span class="inline-block h-1em w-1px bg-#fff/20 mx-2" />
+                </div>
+              </div>
+
+              <div class="flex items-center justify-end pt-3 md:pt-0">
+                <q-skeleton
+                  type="QBtn"
+                  no-caps
+                  rounded
+                  unelevated
+                  class="mr-4 text-weight-normal rounded-30px"
+                />
+
+                <q-skeleton
+                  type="QBtn"
+                  no-caps
+                  rounded
+                  unelevated
+                  class="mr-4 text-weight-normal rounded-30px"
+                />
+
+                <q-skeleton
+                  type="QBtn"
+                  no-caps
+                  rounded
+                  unelevated
+                  class="mr-4 text-weight-normal rounded-30px"
+                />
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <q-skeleton type="text" class="text-sm w-19em" />
+              <q-skeleton type="text" class="text-sm w-6em" />
+            </div>
+            <!-- /basic info-->
+
+            <!-- genres -->
+            <div class="mx--1 mt-3">
+              <q-skeleton
+                class="inline-block mx-1"
+                type="QChip"
+                v-for="item in 3 + Math.round(7 * Math.random())"
+                :key="item"
+                :style="{
+                  width: 3 + 5 * Math.random() + 'em'
+                }"
+              />
+            </div>
+            <!-- /gerens -->
+
+            <h6 v-if="$q.screen.width >= 625" class="text-16px mt-4">
+              <q-skeleton type="text" class="text-16px w-90px" />
+            </h6>
+            <div v-if="$q.screen.width >= 625" class="flex flex-nowrap">
+              <div>
+                <q-responsive :ratio="3 / 4" class="w-170px rounded-xl">
+                  <q-skeleton type="rect" class="absolute fit" />
+                </q-responsive>
+              </div>
+              <div class="ml-4 w-full">
+                <p
+                  class="text-14px leading-loose whitespace-pre-wrap text-[#9a9a9a]"
+                >
+                  <q-skeleton type="text" class="w-full" />
+                  <q-skeleton type="text" class="w-full" />
+                  <q-skeleton type="text" class="w-1/2" />
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            v-else-if="data && !error"
             class="px-4 col-12"
             :class="{
               'col-sm-8': fullscreenOrLtMd,
@@ -262,102 +358,6 @@ meta:
               </div>
             </div>
           </div>
-          <div
-            v-else-if="!error"
-            class="px-4 col-12"
-            :class="{
-              'col-sm-8': fullscreenOrLtMd,
-              'col-sm-12': !fullscreenOrLtMd || $q.screen.width <= 625
-            }"
-          >
-            <q-skeleton
-              type="text"
-              class="text-h6 text-20px w-60% mt-2 line-clamp-3"
-            />
-
-            <div class="flex md:flex-nowrap justify-between">
-              <div>
-                <q-skeleton type="text" class="text-sm w-180px" />
-
-                <!-- basic info -->
-                <div class="text-gray-400 text-sm mt-3 flex items-center">
-                  <q-skeleton type="text" class="text-sm w-4em" />
-
-                  <span class="inline-block h-1em w-1px bg-#fff/20 mx-2" />
-
-                  <q-skeleton type="text" class="text-sm w-6em" />
-
-                  <span class="inline-block h-1em w-1px bg-#fff/20 mx-2" />
-                </div>
-              </div>
-
-              <div class="flex items-center justify-end pt-3 md:pt-0">
-                <q-skeleton
-                  type="QBtn"
-                  no-caps
-                  rounded
-                  unelevated
-                  class="mr-4 text-weight-normal rounded-30px"
-                />
-
-                <q-skeleton
-                  type="QBtn"
-                  no-caps
-                  rounded
-                  unelevated
-                  class="mr-4 text-weight-normal rounded-30px"
-                />
-
-                <q-skeleton
-                  type="QBtn"
-                  no-caps
-                  rounded
-                  unelevated
-                  class="mr-4 text-weight-normal rounded-30px"
-                />
-              </div>
-            </div>
-
-            <div class="mt-4">
-              <q-skeleton type="text" class="text-sm w-19em" />
-              <q-skeleton type="text" class="text-sm w-6em" />
-            </div>
-            <!-- /basic info-->
-
-            <!-- genres -->
-            <div class="mx--1 mt-3">
-              <q-skeleton
-                class="inline-block mx-1"
-                type="QChip"
-                v-for="item in 3 + Math.round(7 * Math.random())"
-                :key="item"
-                :style="{
-                  width: 3 + 5 * Math.random() + 'em'
-                }"
-              />
-            </div>
-            <!-- /gerens -->
-
-            <h6 v-if="$q.screen.width >= 625" class="text-16px mt-4">
-              <q-skeleton type="text" class="text-16px w-90px" />
-            </h6>
-            <div v-if="$q.screen.width >= 625" class="flex flex-nowrap">
-              <div>
-                <q-responsive :ratio="3 / 4" class="w-170px rounded-xl">
-                  <q-skeleton type="rect" class="absolute fit" />
-                </q-responsive>
-              </div>
-              <div class="ml-4 w-full">
-                <p
-                  class="text-14px leading-loose whitespace-pre-wrap text-[#9a9a9a]"
-                >
-                  <q-skeleton type="text" class="w-full" />
-                  <q-skeleton type="text" class="w-full" />
-                  <q-skeleton type="text" class="w-1/2" />
-                </p>
-              </div>
-            </div>
-          </div>
           <div v-else class="text-center col-12 py-8 px-6">
             <code class="block">{{ error }}</code>
 
@@ -467,7 +467,7 @@ import dayjs from "logic/dayjs"
 import { getEpisodeName } from "logic/get-episode-name"
 
 const props = defineProps<{
-  hentaiSlug: string
+  hentai: string
 }>()
 const router = useRouter()
 const route = useRoute()
@@ -483,9 +483,9 @@ const fullscreenOrLtMd = computed(() => {
 })
 
 const { data, loading, error, refresh } = useRequest(
-  () => getWatch(props.hentaiSlug),
+  () => getWatch(props.hentai),
   {
-    refreshDeps: () => props.hentaiSlug
+    refreshDeps: () => props.hentai
   }
 )
 // /search?page=1&limit=24&orderby=date&order=desc&tags=slime-living-together&searchBy=slug
