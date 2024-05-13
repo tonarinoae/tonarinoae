@@ -1,10 +1,11 @@
 {
-  "name": "example",
-  "packageName": "com.example",
+  "name": "tonarinoae",
+  "packageName": "git.shin.tonarinoae",
   "version": "0.0.1",
-  "description": "Description for example app.",
+  "type": "module",
+  "description": "となりのアニメへんたい (Tonari no Anime Ecchi)",
   "productName": "Example",
-  "productDescription": "Description for example app.",
+  "productDescription": "となりのアニメへんたい (Tonari no Anime Ecchi)",
   "author": "Tachibana Shin <45375496+tachibana-shin@users.noreply.github.com>",
   "private": true,
   "scripts": {

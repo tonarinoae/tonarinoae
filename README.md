@@ -1,9 +1,8 @@
+![](src/assets/app_icon.png)
 
-  ![](src/assets/app_icon.png)
+となりのアニメへんたい (romaji: Tonari no Anime Ecchi)
 
-となりのアニメへんたい (romaji: Tonarin no Anime Ecchi)
-
-***This app contains source code that allows access to "adult" content so make sure you are over 18 before accessing it***
+**_This app contains source code that allows access to "adult" content so make sure you are over 18 before accessing it_**
 
 ## Install the dependencies
 
@@ -47,6 +46,13 @@ See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-
 
 ### Progress
 
+#### WIP
+
+| Features | Description             | Status |
+| -------- | ----------------------- | ------ |
+| English  | Add support english sub | [ ]    |
+| Japanese | Add support japanese    | [ ]    |
+
 #### Pages
 
 | Page           | Completed | Mobile | App | More                               |
@@ -72,7 +78,7 @@ See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-
 | Component     | Completed | Mobile | App |
 | ------------- | --------- | ------ | --- |
 | header        | [x]       | [ ]    | [ ] |
-| toolar bottom | [ ]       | [ ]    | [ ] |
+| toolbar bottom | [ ]       | [ ]    | [ ] |
 | menu sheet    | [x]       | [ ]    | [ ] |
 
 #### Features more

@@ -2,12 +2,12 @@
   <q-drawer
     :model-value="hideDrawer ? modelValue : true"
     @update:model-value="modelValue = $event"
-      :width="250"
-      :breakpoint="500"
-      :mini="hideDrawer ? false : !modelValue"
-      :overlay="hideDrawer"
-      :behavior="hideDrawer ? 'mobile' : undefined"
-    class="!bg-[var(--q-dark-page)]  overflow-visible column flex-nowrap"
+    :width="250"
+    :breakpoint="500"
+    :mini="hideDrawer ? false : !modelValue"
+    :overlay="hideDrawer"
+    :behavior="hideDrawer ? 'mobile' : undefined"
+    class="!bg-[var(--q-dark-page)] overflow-visible column flex-nowrap"
   >
     <q-toolbar v-if="hideDrawer">
       <q-btn
