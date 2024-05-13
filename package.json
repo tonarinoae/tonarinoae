@@ -92,7 +92,7 @@
     "@tachibana-shin/eslint-config": "1.1.1",
     "@tachibana-shin/vite-plugin-pages": "0.31.1-beta.1",
     "@testing-library/vue": "^8.0.1",
-    "@types/node": "20.11.13",
+    "@types/node": "20.12.11",
     "@types/serviceworker": "^0.0.82",
     "@typescript-eslint/eslint-plugin": "^7.8.0",
     "@typescript-eslint/parser": "^7.8.0",
