@@ -100,6 +100,7 @@
     "@vitest/ui": "^1.2.2",
     "@vitest/web-worker": "^1.2.2",
     "@vue-macros/volar": "^0.18.11",
+    "@vue/compiler-core": "^3.4.27",
     "@vue/test-utils": "^2.4.4",
     "autoprefixer": "^10.4.17",
     "bumpp": "^9.3.0",

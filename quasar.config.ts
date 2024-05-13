@@ -6,12 +6,13 @@
 // Configuration for your app
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
 
-// eslint-disable-next-line n/no-extraneous-import
+import { resolve } from "path"
+
+import type { ConfigureCallback } from "@quasar/app-vite"
 import type { RootNode, TemplateChildNode } from "@vue/compiler-core"
 import dotenv from "dotenv"
 import { extend } from "quasar"
 import { configure } from "quasar/wrappers"
-import { resolve } from "path"
 
 import { productName } from "./package.json"
 import { vitePlugins } from "./vite-plugins"
@@ -43,8 +44,9 @@ export default configure((/* ctx */ { prod }) => {
   //       })
   // })
 
-  return {
-    eslint: {
+  const conf: ReturnType<ConfigureCallback> = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ["eslint" as unknown as any]: {
       fix: true,
       // include = [],
       // exclude = [],
@@ -94,7 +96,8 @@ export default configure((/* ctx */ { prod }) => {
       // vueDevtools,
       // vueOptionsAPI: false,
 
-      rebuildCache: false, // rebuilds Vite/linter/etc cache on startup
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ["rebuildCache" as unknown as any]: false, // rebuilds Vite/linter/etc cache on startup
 
       // publicPath: '/',
       // analyze: true,
@@ -275,12 +278,6 @@ export default configure((/* ctx */ { prod }) => {
         // protocol: 'myapp://path',
         // Windows only
         // win32metadata: { ... }
-      },
-
-      builder: {
-        // https://www.electron.build/configuration/configuration
-
-        appId: "manga-raiku"
       }
     },
 
@@ -292,4 +289,6 @@ export default configure((/* ctx */ { prod }) => {
       // extendBexManifestJson (json) {}
     }
   }
+
+  return conf
 })
