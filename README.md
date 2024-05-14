@@ -59,8 +59,8 @@ See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-
 | -------------- | --------- | ------ | --- | ---------------------------------- |
 | category       | [x]       | [x]    | [ ] | Catch erro, catch empty            |
 | explore        | [x]       | [x]    | [ ] | Catch erro                         |
-| gacha          | [x]       | [ ]    | [ ] | Catch erro                         |
-| gallery        | [x]       | [ ]    | [ ] | Catch erro                         |
+| gacha          | [x]       | [x]    | [ ] | Catch erro                         |
+| gallery        | [x]       | [x]    | [ ] | Catch erro                         |
 | search         | [x]       | [x]    | [ ] | Catch erro, catch empty            |
 | studio         | [x]       | [x]    | [ ] | Catch erro, catch empty            |
 | tag            | [x]       | [x]    | [ ] | Catch erro, catch empty            |
