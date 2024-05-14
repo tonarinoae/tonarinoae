@@ -498,7 +498,7 @@ useHead({
       const serieName = data.value.video.tags[0]?.name ?? data.value.video.title
       const episodeText = `Tập ${getEpisodeName(data.value.video)}`
 
-      return `${episodeText} ${[serieName, ...data.value.video.tags.slice(0).map((item) => item.name)].join(", ")}`
+      return `${episodeText} ${[serieName, ...data.value.video.alternativeTitles].join(", ")}`
     },
     description: () => data.value?.video.synopsis ?? null,
     url: () => route.fullPath
