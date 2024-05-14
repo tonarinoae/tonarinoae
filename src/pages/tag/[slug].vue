@@ -3,7 +3,13 @@ name: tag
 </route>
 
 <template>
-  <Category type="tags" type-tax="tag" :ignore-watch="['tags']" :slug />
+  <Category
+    type="tags"
+    title="Tag"
+    type-tax="tag"
+    :ignore-watch="['tags']"
+    :slug
+  />
 </template>
 
 <script lang="ts" setup>

@@ -1,10 +1,8 @@
 // import { Http } from "client-ext-animevsub-helper"
 
-import type { RouteLocationRaw } from "vue-router"
+import type { LocationQueryValue, RouteLocationRaw } from "vue-router"
 
-const API_URL = "https://ihentai.xyz/api"
-
-function fetchPolyfill(url: string, body?: URLSearchParams) {
+function fetchPolyfill(url: string, body?: URLSearchParams | string) {
   return fetch(url, {
     body,
     method: body ? "post" : "get"
@@ -212,9 +210,16 @@ export function getSearch(
   order: "desc",
   metaKey: string,
   options:
-    | { studios: string; tags: string; years: number; genres: string }
-    | { tags: string },
-  searchBy: "slug"
+    | {
+        studios: LocationQueryValue | LocationQueryValue[]
+        tags: LocationQueryValue | LocationQueryValue[]
+        years: LocationQueryValue | LocationQueryValue[]
+        genres: LocationQueryValue | LocationQueryValue[]
+        series: LocationQueryValue | LocationQueryValue[]
+        s?: string
+      }
+    | { tags: LocationQueryValue | LocationQueryValue[] },
+  searchBy?: "slug"
 ): Promise<Search>
 // eslint-disable-next-line no-redeclare
 export function getSearch(
@@ -224,8 +229,14 @@ export function getSearch(
   order: "desc",
   metaKey: string,
   options:
-    | { studios: string; tags: string; years: number; genres: string }
-    | { tags: string }
+    | {
+        studios: LocationQueryValue | LocationQueryValue[]
+        tags: LocationQueryValue | LocationQueryValue[]
+        years: LocationQueryValue | LocationQueryValue[]
+        genres: LocationQueryValue | LocationQueryValue[]
+        series: LocationQueryValue | LocationQueryValue[]
+      }
+    | { tags: LocationQueryValue | LocationQueryValue[] }
     | { s: string },
   searchBy?: "slug"
 ): Promise<Search> {
@@ -237,7 +248,7 @@ export function getSearch(
       order: order as string,
       metaKey,
       ...(options as Record<string, string>),
-      searchBy: searchBy as string
+      searchBy: (searchBy as string) ?? ""
     })}`
   ).then((res) => res.json())
 }
@@ -249,7 +260,7 @@ export interface Categories
       taxonomy: "category"
     }
   > {}
-export interface Series
+export interface Seriess
   extends Array<
     Omit<Term, "taxonomy"> & {
       taxonomy: "series"
@@ -270,7 +281,7 @@ export interface ReleaseYears
 
 export interface Taxonomies {
   category: Categories
-  series: Series
+  series: Seriess
   studio: Studios
   release_year: ReleaseYears
 }
@@ -284,11 +295,17 @@ export function getExplorer<Taxonomy extends keyof Taxonomies>(
 
 export function getPostQuery(
   page: number,
-  limit: string,
+  limit: number,
   metaQuery: { key: string; value: string }[],
   options:
-    | { studios: string; tags: string; years: number; genres: string }
-    | { tags: string },
+    | {
+        studios: LocationQueryValue | LocationQueryValue[]
+        tags: LocationQueryValue | LocationQueryValue[]
+        years: LocationQueryValue | LocationQueryValue[]
+        series: LocationQueryValue | LocationQueryValue[]
+        genres: LocationQueryValue | LocationQueryValue[]
+      }
+    | { tags: LocationQueryValue | LocationQueryValue[] },
   orderby: "date",
   order: "desc"
 ): Promise<Search> {
@@ -309,8 +326,8 @@ export function getPostQuery(
 export function gacha(limit: number): Promise<Video[]> {
   return fetchPolyfill(
     `${API_URL}/gacha?${new URLSearchParams({
-      limit,
-      t: Date.now()
+      limit: limit + "",
+      t: Date.now() + ""
     })}`
   ).then((res) => res.json())
 }

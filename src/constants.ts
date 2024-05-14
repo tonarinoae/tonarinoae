@@ -1,3 +1,5 @@
+export const API_URL = "https://ihentai.vc/api"
+
 export const WARN = console.warn.bind(console)
 export const playbacks = [
   { name: "2x", value: 2.0 },

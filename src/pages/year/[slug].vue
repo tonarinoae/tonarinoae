@@ -5,6 +5,7 @@ name: year
 <template>
   <Category
     type="years"
+    title="Năm"
     type-tax="release_year"
     :ignore-watch="['years']"
     :slug

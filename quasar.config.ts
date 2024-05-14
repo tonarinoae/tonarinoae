@@ -144,7 +144,9 @@ export default configure((/* ctx */ { prod }) => {
       viteVuePluginOptions: {
         template: {
           compilerOptions: {
-            ['nodeTransforms' as unknown as any]: !process.env.DEV ? [removeDataTestAttrs] : []
+            ["nodeTransforms" as unknown as any]: !process.env.DEV
+              ? [removeDataTestAttrs]
+              : []
           }
         },
         script: {
@@ -226,7 +228,7 @@ export default configure((/* ctx */ { prod }) => {
 
     // https://v2.quasar.dev/quasar-cli-vite/developing-pwa/configuring-pwa
     pwa: {
-      ['workboxMode'as unknown as any]: "injectManifest", // or 'generateSW'
+      ["workboxMode" as unknown as any]: "injectManifest", // or 'generateSW'
       injectPwaMetaTags: true,
       swFilename: "sw.js",
       manifestFilename: "manifest.json",

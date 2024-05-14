@@ -59,7 +59,16 @@ const gachas = [1, 10, 20, 30]
 
 const limit = ref(1)
 
-const { data, loading, error, refresh } = useRequest(() => gacha(limit.value))
-</script>
+const { data, error, refresh } = useRequest(() => gacha(limit.value))
 
-<style></style>
+const route = useRoute()
+
+useHead({
+  templateParams: {
+    name: "Gacha phiên bản Unlimited",
+    description:
+      "Cùng xem nhân phẩm của bạn như thế nào với tính năng GACHA cực hot tại %site_name, web xem phim sex hoạt hình anime hentai vietsub miễn phí chất lượng cao lớn nhất VN",
+    url: () => route.fullPath
+  }
+})
+</script>

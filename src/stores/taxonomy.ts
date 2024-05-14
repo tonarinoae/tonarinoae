@@ -1,13 +1,15 @@
-import { defineStore } from "pinia"
 import { getExplorer } from "api/index"
 import { get, set } from "idb-keyval"
+import { ExpiringLocalStorage } from "logic/expiring-local-storage"
+import { defineStore } from "pinia"
+import type { Ref } from "vue"
 
 function useStorageContract<T>(
   storage: ExpiringLocalStorage,
   name: string,
   defaultValue: T,
   fn: () => Promise<T>
-): ReadonlyRef<T> {
+): Readonly<Ref<T>> {
   return computedAsync(
     async () => {
       const promiseDB = get(name)
@@ -17,8 +19,10 @@ function useStorageContract<T>(
         fn().then((data) => {
           const json = JSON.stringify(data)
           void promiseDB
+            // eslint-disable-next-line promise/no-nesting
             .catch(() => null)
             .then((inDB) => {
+              // eslint-disable-next-line promise/always-return
               if (inDB !== json) void set(name, json)
             })
 

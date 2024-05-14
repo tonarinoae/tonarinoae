@@ -37,7 +37,7 @@
         "
       />
 
-      <div v-else :key="genre.id" class="col-6 px-1 py-1">
+      <div v-else class="col-6 px-1 py-1">
         <card-taxonomy
           :taxonomy="genre"
           :class="{
@@ -73,6 +73,8 @@
 </template>
 
 <script lang="ts" setup generic="T extends Term">
+import type { Term } from "api/index"
+
 const props = defineProps<{
   label: string
   icon: Component
@@ -109,7 +111,7 @@ function onResetValue(state: boolean) {
 
   if (value) {
     genres.splice(0)
-    genres.push(value + "")
+    genres.push(Number(value))
   }
 }
 </script>

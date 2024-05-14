@@ -89,15 +89,18 @@ name: explore
 </template>
 
 <script lang="ts" setup>
-import top_views from "src/assets/top-views.jpg"
+import gacha from "src/assets/gacha.jpg"
 import gallery from "src/assets/gallery.jpg"
 import genres from "src/assets/genres.jpg"
-import gacha from "src/assets/gacha.jpg"
+// eslint-disable-next-line camelcase
+import top_views from "src/assets/top-views.jpg"
 
-import iconHot from "~icons/zondicons/hot"
-import iconGallery from "~icons/solar/gallery-minimalistic-bold"
-import iconCategory from "~icons/iconamoon/category"
 import iconMagic from "~icons/game-icons/magick-trick"
+import iconCategory from "~icons/iconamoon/category"
+import iconGallery from "~icons/solar/gallery-minimalistic-bold"
+import iconHot from "~icons/zondicons/hot"
+
+const route = useRoute()
 
 const taxonomyStore = useTaxonomyStore()
 
@@ -105,6 +108,7 @@ const banners = [
   {
     name: "Hentai hot",
     capt: "Phim nhiều lượt xem nhất",
+    // eslint-disable-next-line camelcase
     image: top_views,
     icon: iconHot,
     to: {
@@ -144,4 +148,13 @@ const banners = [
     }
   }
 ]
+
+useHead({
+  templateParams: {
+    name: "Khám phá những tính năng mới lạ trên Tonarinoae",
+    description:
+      "Xem và khám phá những tính năng hay và nổi bật nhất %site_name, web xem phim sex hoạt hình anime hentai vietsub miễn phí chất lượng cao lớn nhất VN",
+    url: () => route.fullPath
+  }
+})
 </script>

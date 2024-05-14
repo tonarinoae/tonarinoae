@@ -75,11 +75,11 @@ See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-
 
 #### Components
 
-| Component     | Completed | Mobile | App |
-| ------------- | --------- | ------ | --- |
-| header        | [x]       | [ ]    | [ ] |
+| Component      | Completed | Mobile | App |
+| -------------- | --------- | ------ | --- |
+| header         | [x]       | [ ]    | [ ] |
 | toolbar bottom | [ ]       | [ ]    | [ ] |
-| menu sheet    | [x]       | [ ]    | [ ] |
+| menu sheet     | [x]       | [ ]    | [ ] |
 
 #### Features more
 
@@ -89,4 +89,4 @@ See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-
 | Show series in player on fullscreen | [ ]       |
 | Follows anime system                | [ ]       |
 | Playlist anime system               | [ ]       |
-| SEO                                 | [ ]       |
+| SEO                                 | [x]       |

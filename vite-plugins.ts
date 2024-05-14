@@ -61,6 +61,7 @@ export const vitePlugins: [
             "useStorage",
             "useEventListener"
           ],
+          "@vueuse/router": ["useRouteQuery"],
           quasar: ["useQuasar"],
           "vue-request": ["useRequest"],
           "vue-i18n": ["useI18n"]

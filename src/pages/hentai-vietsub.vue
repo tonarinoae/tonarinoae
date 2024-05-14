@@ -32,7 +32,7 @@ name: hentai-vietsub
       />
 
       <q-btn-dropdown rounded no-caps color="dark">
-        <template v-slot:label>
+        <template #label>
           <i-flowbite-sort-outline class="size-1.5em mr-1" />
           Sắp xếp
         </template>
@@ -84,7 +84,9 @@ name: hentai-vietsub
       </div>
 
       <q-pagination
-        :model-value="Math.max(1, current, parseInt($route.query.page) || 0)"
+        :model-value="
+          Math.max(1, current, parseInt($route.query.page + '') || 0)
+        "
         :max="Math.ceil(data.count / 24)"
         :max-pages="7"
         direction-links
@@ -130,12 +132,13 @@ name: hentai-vietsub
 </template>
 
 <script lang="tsx" setup>
+import { getPostQuery } from "api/index"
+import { usePagination } from "vue-request"
+
 import iconCategory from "~icons/fluent/tag-multiple-24-filled"
 import iconSeries from "~icons/iconoir/playlist-play"
-import iconStudio from "~icons/simple-icons/youtubestudio"
 import iconYear from "~icons/iwwa/year"
-import { usePagination } from "vue-request"
-import { getPostQuery } from "api/index"
+import iconStudio from "~icons/simple-icons/youtubestudio"
 
 // import { NAvatar, NList, NListItem, NPagination, NSpin } from 'naive-ui';
 
@@ -146,7 +149,8 @@ const props = withDefaults(
   }>(),
   {
     title: "Hentai vietsub",
-    query: [{ key: "trailer", value: "0" }]
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    query: [{ key: "trailer", value: "0" }] as unknown as any
   }
 )
 
@@ -169,47 +173,66 @@ const sorters = [
   }
 ]
 
-const { data, current, totalPage, pageSize, loading, error, refresh } =
-  usePagination(
-    ({ page = 1, limit = 24 }) =>
-      getPostQuery(
-        Math.max(1, parseInt($route.query.page) || 0),
-        limit,
-        props.query,
-        {
-          genres: $route.query.genres ?? "",
-          studios: $route.query.studios ?? "",
-          tags: $route.query.tags ?? "",
-          series: $route.query.series ?? "",
-          years: $route.query.years ?? ""
-        },
-
-        $route.query.orderby ?? "",
-        $route.query.order ?? ""
-      ).then((data) => Object.assign(data, { page })),
-    {
-      defaultParams: [
-        {
-          limit: 24
-        }
-      ],
-      pagination: {
-        currentKey: "page",
-        totalKey: "count"
+const { data, current, loading, error, refresh } = usePagination(
+  ({ limit } = { limit: 24 }) =>
+    getPostQuery(
+      Math.max(1, parseInt($route.query.page + "") || 0),
+      limit,
+      props.query!,
+      {
+        genres: $route.query.genres ?? "",
+        studios: $route.query.studios ?? "",
+        tags: $route.query.tags ?? "",
+        series: $route.query.series ?? "",
+        years: $route.query.years ?? ""
       },
-      refreshDeps: [
-        () => $route.query.orderby,
-        () => $route.query.order,
 
-        () => $route.query.genres,
-        () => $route.query.studios,
-        () => $route.query.tags,
-        () => $route.query.series,
-        () => $route.query.years,
+      (($route.query.orderby ?? "") + "") as "date",
+      (($route.query.order ?? "") + "") as "desc"
+    ),
+  {
+    defaultParams: [
+      {
+        limit: 24
+      }
+    ],
+    pagination: {
+      currentKey: "page",
+      totalKey: "count"
+    },
+    refreshDeps: [
+      () => $route.query.orderby,
+      () => $route.query.order,
 
-        () => $route.query.page
-      ],
-      refreshDepsAction: () => (current.value = 0)
-    }
-  )
+      () => $route.query.genres,
+      () => $route.query.studios,
+      () => $route.query.tags,
+      () => $route.query.series,
+      () => $route.query.years,
+
+      () => $route.query.page
+    ],
+    // eslint-disable-next-line no-void
+    refreshDepsAction: () => void (current.value = 0)
+  }
+)
+
+const page = computed(() =>
+  Math.max(1, current.value, parseInt($route.query.page + "") || 0)
+)
+
+const route = useRoute()
+useHead({
+  templateParams: {
+    name: () => {
+      const describeFilters = describeQueries(route, taxonomyStore)
+      return (
+        props.title +
+        (describeFilters ? ` lọc ${describeFilters}` : "") +
+        (page.value > 1 ? ` trang ${page.value + 1}` : "")
+      )
+    },
+    url: () => route.fullPath
+  }
+})
 </script>

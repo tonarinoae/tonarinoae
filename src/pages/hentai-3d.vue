@@ -9,5 +9,3 @@ name: hentai-3d
 <script lang="ts" setup>
 import Hentai from "./hentai-vietsub.vue"
 </script>
-
-<style></style>

@@ -5,6 +5,7 @@ name: studio
 <template>
   <Category
     type="studios"
+    title="Studio"
     type-tax="studio"
     :ignore-watch="['studios']"
     :slug

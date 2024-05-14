@@ -9,6 +9,7 @@
   >
     <video
       ref="videoRef"
+      :poster
       @play="$hPlaying = true"
       @pause="$hPlaying = false"
       @progress="onProgress"
@@ -121,6 +122,7 @@ import Hls from "hls.js"
 import workerHls from "hls.js/dist/hls.worker?url"
 
 const props = defineProps<{
+  poster?: string
   src: string
   isDesktop?: boolean
 }>()
@@ -286,7 +288,7 @@ const hiddenTooltip = ref(false)
 defineExpose({ fullscreen: hFullscreen })
 provide("fullscreen", hFullscreen)
 provide("hiddenTooltip", hiddenTooltip)
-provide("setHiddenTooltip", (val) => (hiddenTooltip.value = val))
+provide("setHiddenTooltip", (val: boolean) => (hiddenTooltip.value = val))
 </script>
 
 <style lang="scss" scoped>

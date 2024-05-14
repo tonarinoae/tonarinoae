@@ -36,7 +36,7 @@ name: category
       />
 
       <q-btn-dropdown rounded no-caps color="dark">
-        <template v-slot:label>
+        <template #label>
           <i-flowbite-sort-outline class="size-1.5em mr-1" />
           Sắp xếp
         </template>
@@ -65,18 +65,7 @@ name: category
     </div>
 
     <div v-if="data && !error" class="row mt-6">
-      <div v-if="mData && !mError" class="col-12">
-        <h1 class="text-h6 text-26px px-2 leading-normal">
-          {{ mData.name }}
-          <span class="text-14px text-gray-400"
-            >({{ data.count }} kết quả)</span
-          >
-        </h1>
-        <h3 class="text-16px text-gray-300 leading-normal px-2">
-          {{ mData.description }}
-        </h3>
-      </div>
-      <div v-else-if="!mError" class="col-12 px-2">
+      <div v-if="mLoading" class="col-12 px-2">
         <q-skeleton
           type="text"
           class="text-h6 text-26px leading-normal"
@@ -87,6 +76,17 @@ name: category
           class="text-16px text-gray-300 leading-normal"
           width="130px"
         />
+      </div>
+      <div v-else-if="mData && !mError" class="col-12">
+        <h1 class="text-h6 text-26px px-2 leading-normal">
+          {{ mData.name }}
+          <span class="text-14px text-gray-400"
+            >({{ data.count }} kết quả)</span
+          >
+        </h1>
+        <h3 class="text-16px text-gray-300 leading-normal px-2">
+          {{ mData.description }}
+        </h3>
       </div>
 
       <div
@@ -100,21 +100,23 @@ name: category
         <card-vertical :video />
       </div>
 
-      <q-pagination
-        :model-value="Math.max(1, current, parseInt($route.query.page) || 0)"
-        :max="Math.ceil(data.count / 24)"
-        :max-pages="7"
-        direction-links
-        flat
-        :to-fn="(page) => ({ query: { ...$route.query, page } })"
-        color="grey"
-        active-color="primary"
-        class="mx-auto"
-      />
+      <div class="col-12">
+        <q-pagination
+          :model-value="page"
+          :max="Math.ceil(data.count / 24)"
+          :max-pages="7"
+          direction-links
+          flat
+          :to-fn="(page) => ({ query: { ...$route.query, page } })"
+          color="grey"
+          active-color="primary"
+          class="justify-around"
+        />
 
-      <q-inner-loading :showing="loading">
-        <q-spinner size="40px" />
-      </q-inner-loading>
+        <q-inner-loading :showing="loading">
+          <q-spinner size="40px" />
+        </q-inner-loading>
+      </div>
     </div>
     <div v-else-if="!error" v-for="i in 5" :key="i" class="row mt-6">
       <div class="col-12 px-2">
@@ -139,7 +141,7 @@ name: category
     <div v-else class="text-center col-12 py-8 px-6">
       <code class="block">{{ error }}</code>
 
-      <q-btn rounded color="blue" no-caps class="mt-3" @click="refresh"
+      <q-btn rounded color="blue" no-caps class="mt-3" @click="refreshAsync"
         >Thử lại</q-btn
       >
     </div>
@@ -147,25 +149,41 @@ name: category
 </template>
 
 <script lang="tsx" setup>
+import { getSearch, getTerm } from "api/index"
+import { usePagination } from "vue-request"
+
 import iconCategory from "~icons/fluent/tag-multiple-24-filled"
 import iconSeries from "~icons/iconoir/playlist-play"
-import iconStudio from "~icons/simple-icons/youtubestudio"
 import iconYear from "~icons/iwwa/year"
-import { usePagination } from "vue-request"
-import { getSearch, getTerm } from "api/index"
+import iconStudio from "~icons/simple-icons/youtubestudio"
 
 // import { NAvatar, NList, NListItem, NPagination, NSpin } from 'naive-ui';
 
+const route = useRoute()
+
 const watches = ["genres", "studios", "tags", "years"] as const
+const taxonomyKeys = {
+  genres: "categories",
+  tags: "series",
+  studios: "studios",
+  years: "releaseYears"
+} as const
 const props = withDefaults(
   defineProps<{
-    type?: "genres" | "tags" | "studios" | "years"
+    title?: string
+    type?: keyof typeof taxonomyKeys
     typeTax?: string
-    ignoreWatch?: (typeof watches)[0][]
+    ignoreWatch?: (typeof watches)[number][]
 
     slug: string
   }>(),
-  { type: "genres", typeTax: "category", ignoreWatch: ["genres"] }
+  {
+    title: "Thể loại",
+    type: "genres",
+    typeTax: "category",
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ignoreWatch: ["genres"] as unknown as any
+  }
 )
 
 const taxonomyStore = useTaxonomyStore()
@@ -198,60 +216,104 @@ const {
   },
   {
     refreshDeps: [() => $route.params.slug, () => props.type],
-    refreshActions: () => mRefresh()
+    // eslint-disable-next-line no-void
+    refreshDepsAction: () => void mRefresh()
   }
 )
-const { data, current, totalPage, pageSize, loading, error, refresh } =
-  usePagination(
-    ({ page = 1, limit = 24 }) =>
-      getSearch(
-        Math.max(1, parseInt($route.query.page) || 0),
-        limit,
-        $route.query.orderby ?? "",
-        $route.query.order ?? "",
-        $route.query.metaKey ?? "",
-        {
-          genres: $route.query.genres ?? "",
-          studios: $route.query.studios ?? "",
-          tags: $route.query.tags ?? "",
-          series: $route.query.series ?? "",
-          years: $route.query.years ?? "",
-          [props.type]: props.slug
-        },
-        "slug"
-      ).then((data) => Object.assign(data, { page })),
+
+const idValue = computed(
+  () =>
+    taxonomyStore[taxonomyKeys[props.type!]]?.find((item) => {
+      return (
+        $router.resolve({ params: { slug: item.slug } }).params.slug ===
+        props.slug
+      )
+    })?.id as number | undefined
+)
+const { data, current, loading, error, refreshAsync } = usePagination(
+  ({ limit } = { limit: 24 }) => {
+    // eslint-disable-next-line functional/no-throw-statements
+    if (!idValue.value) throw new Error("Can't find resolve id")
+
+    return getSearch(
+      Math.max(1, parseInt($route.query.page + "") || 0),
+      limit,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (($route.query.orderby ?? "") + "") as unknown as any,
+      (($route.query.order ?? "") + "") as "desc",
+      ($route.query.metaKey ?? "") + "",
+      {
+        genres: $route.query.genres ?? "",
+        studios: $route.query.studios ?? "",
+        tags: $route.query.tags ?? "",
+        series: $route.query.series ?? "",
+        years: $route.query.years ?? "",
+        [props.type]: idValue.value
+      }
+    )
+  },
+  {
+    manual: true,
+    defaultParams: [
+      {
+        limit: 24
+      }
+    ],
+    pagination: {
+      currentKey: "page",
+      totalKey: "count"
+    },
+    refreshDeps: [
+      () => props.type,
+      () => props.slug,
+      () => $route.query.orderby,
+      () => $route.query.order,
+      () => $route.query.metaKey,
+
+      () =>
+        (props.ignoreWatch
+          ? watches.filter((name) => !props.ignoreWatch!.includes(name))
+          : watches
+        ).map((name) => $route.query[name]),
+
+      () => $route.query.genres,
+      () => $route.query.studios,
+      () => $route.query.tags,
+      () => $route.query.series,
+      () => $route.query.years,
+
+      () => $route.query.page
+    ]
+  }
+)
+watchImmediate(idValue, (value) => {
+  if (value) void refreshAsync()
+})
+
+const page = computed(() =>
+  Math.max(1, current.value, parseInt($route.query.page + "") || 0)
+)
+
+useHead({
+  templateParams: {
+    name: () => {
+      if (!mData.value) return null
+
+      const describeFilters = describeQueries(route, taxonomyStore)
+      return (
+        `${props.title} ${mData.value?.name}` +
+        (describeFilters ? ` lọc ${describeFilters}` : "") +
+        (page.value > 1 ? ` trang ${page.value + 1}` : "")
+      )
+    },
+    description: () => mData.value?.description ?? null,
+    url: () => route.fullPath
+  },
+  meta: [
     {
-      defaultParams: [
-        {
-          limit: 24
-        }
-      ],
-      pagination: {
-        currentKey: "page",
-        totalKey: "count"
-      },
-      refreshDeps: [
-        () => props.type,
-        () => props.slug,
-        () => $route.query.orderby,
-        () => $route.query.order,
-        () => $route.query.metaKey,
-
-        () =>
-          (props.ignoreWatch
-            ? watches.filter((name) => !props.ignoreWatch.includes(name))
-            : watches
-          ).map((name) => $route.query[name]),
-
-        () => $route.query.genres,
-        () => $route.query.studios,
-        () => $route.query.tags,
-        () => $route.query.series,
-        () => $route.query.years,
-
-        () => $route.query.page
-      ],
-      refreshDepsAction: () => (current.value = 0)
+      property: "og:image",
+      content: () => mData.value?.thumbnail ?? null
     }
-  )
+  ]
+})
 </script>

@@ -15,6 +15,7 @@ meta:
       >
         <player
           v-if="data"
+          :poster="data.video.poster ?? data.video.thumbnail"
           :src="data.video.links[0]"
           ref="playerRef"
           :is-desktop="!$q.platform.is.mobile"
@@ -488,6 +489,29 @@ const { data, loading, error, refresh } = useRequest(
     refreshDeps: () => props.hentai
   }
 )
+
+useHead({
+  templateParams: {
+    name: () => {
+      if (!data.value) return null
+
+      const serieName = data.value.video.tags[0]?.name ?? data.value.video.title
+      const episodeText = `Tập ${getEpisodeName(data.value.video)}`
+
+      return `${episodeText} ${[serieName, ...data.value.video.tags.slice(0).map((item) => item.name)].join(", ")}`
+    },
+    description: () => data.value?.video.synopsis ?? null,
+    url: () => route.fullPath
+  },
+  meta: [
+    {
+      property: "og:image",
+      content: () =>
+        data.value?.video.poster ?? data.value?.video.thumbnail ?? null
+    }
+  ]
+})
+
 // /search?page=1&limit=24&orderby=date&order=desc&tags=slime-living-together&searchBy=slug
 const series = computedAsync(
   () => {
