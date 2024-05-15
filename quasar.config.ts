@@ -230,7 +230,7 @@ export default configure((/* ctx */ { prod }) => {
     // https://v2.quasar.dev/quasar-cli-vite/developing-pwa/configuring-pwa
     pwa: {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ["workboxMode" as unknown as any]: "injectManifest", // or 'generateSW'
+      ["workboxMode" as unknown as any]: "InjectManifest", // or 'generateSW'
       injectPwaMetaTags: true,
       swFilename: "sw.js",
       manifestFilename: "manifest.json",

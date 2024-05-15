@@ -1,7 +1,7 @@
 import Pages from "@tachibana-shin/vite-plugin-pages"
 import { unheadVueComposablesImports } from "@unhead/vue"
+import UnoCSS from "@unocss/vite"
 import { OnuResolver } from "onu-ui"
-import UnoCSS from "unocss/vite"
 import AutoImport from "unplugin-auto-import/vite"
 import IconsResolver from "unplugin-icons/resolver"
 import Icons from "unplugin-icons/vite"
