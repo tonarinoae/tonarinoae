@@ -55,6 +55,7 @@
   "dependencies": {
     "@hannoeru/eslint-plugin": "^0.9.7",
     "@quasar/extras": "^1.16.9",
+    "@supabase/supabase-js": "^2.43.1",
     "@unhead/vue": "^1.8.10",
     "@vueuse/components": "^10.7.2",
     "@vueuse/core": "^10.7.2",

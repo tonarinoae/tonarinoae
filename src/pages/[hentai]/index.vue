@@ -359,12 +359,97 @@ meta:
               </div>
             </div>
           </div>
-          <div v-else class="text-center col-12 py-8 px-6">
+          <div v-else-if="error" class="text-center col-12 py-8 px-6">
             <code class="block">{{ error }}</code>
 
             <q-btn rounded color="blue" no-caps class="mt-3" @click="refresh"
               >Thử lại</q-btn
             >
+          </div>
+          <div
+            v-else
+            class="px-4 col-12"
+            :class="{
+              'col-sm-8': fullscreenOrLtMd,
+              'col-sm-12': !fullscreenOrLtMd || $q.screen.width <= 625
+            }"
+          >
+            <q-skeleton type="text" class="text-h6 20px mt-2 line-clamp-3" />
+
+            <div class="flex md:flex-nowrap justify-between">
+              <div>
+                <q-skeleton type="text" class="text-sm w-180px" />
+
+                <!-- basic info -->
+                <div class="text-gray-400 text-sm mt-3 flex items-center">
+                  <q-skeleton type="text" class="text-sm w-180px" />
+
+                  <span class="inline-block h-1em w-1px bg-#fff/20 mx-2" />
+
+                  <q-skeleton type="text" class="text-sm w-180px" />
+
+                  <span class="inline-block h-1em w-1px bg-#fff/20 mx-2" />
+                </div>
+              </div>
+
+              <div class="flex items-center justify-end pt-3 md:pt-0">
+                <q-skeleton
+                  type="QBtn"
+                  no-caps
+                  rounded
+                  unelevated
+                  class="bg-[rgba(113,113,113,0.3)] mr-4 text-weight-normal"
+                />
+
+                <q-skeleton
+                  type="QBtn"
+                  no-caps
+                  rounded
+                  unelevated
+                  class="bg-[rgba(113,113,113,0.3)] mr-4 text-weight-normal"
+                />
+
+                <q-skeleton
+                  type="QBtn"
+                  no-caps
+                  rounded
+                  unelevated
+                  class="bg-[rgba(113,113,113,0.3)] mr-4 text-weight-normal"
+                />
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <q-skeleton type="text" class="text-sm w-180px" />
+              <q-skeleton type="text" class="text-sm w-50px" />
+            </div>
+            <!-- /basic info-->
+
+            <!-- genres -->
+            <div class="mx--2 mt-3">
+              <q-skeleton type="QChip" v-for="item in 10" :key="item" />
+            </div>
+            <!-- /gerens -->
+
+            <h6 v-if="$q.screen.width >= 625" class="text-16px mt-4">
+              <q-skeleton type="text" class="text-16px w-90px" />
+            </h6>
+            <div v-if="$q.screen.width >= 625" class="flex flex-nowrap">
+              <div>
+                <q-responsive :ratio="3 / 4" class="w-170px rounded-xl">
+                  <q-skeleton type="rect" class="absolute fit" />
+                </q-responsive>
+              </div>
+              <div class="ml-4">
+                <p
+                  class="text-14px leading-loose whitespace-pre-wrap text-[#9a9a9a]"
+                >
+                  <q-skeleton type="text" class="w-full" />
+                  <q-skeleton type="text" class="w-full" />
+                  <q-skeleton type="text" class="w-1/2" />
+                </p>
+              </div>
+            </div>
           </div>
           <div
             v-if="fullscreenOrLtMd"
