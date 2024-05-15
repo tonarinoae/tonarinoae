@@ -4,8 +4,8 @@ export function useFullscreen() {
   return computed({
     get: () => AppFullscreen.isActive,
     set: (val) => {
-      if (val) AppFullscreen.request()
-      else AppFullscreen.exit()
+      if (val) void AppFullscreen.request()
+      else void AppFullscreen.exit()
     }
   })
 }

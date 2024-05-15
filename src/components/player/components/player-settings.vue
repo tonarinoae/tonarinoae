@@ -111,13 +111,13 @@
 </template>
 
 <script lang="ts" setup>
-import { QMenu } from "quasar"
-import { playbacks } from "src/constants"
 import type { Level } from "hls.js"
+import type { QMenu } from "quasar"
+import { playbacks } from "src/constants"
 
-import iHd from "~icons/system-uicons/filtering"
-import iPlaylist from "~icons/solar/clapperboard-open-play-linear"
 import iSpeed from "~icons/fluent/top-speed-24-regular"
+import iPlaylist from "~icons/solar/clapperboard-open-play-linear"
+import iHd from "~icons/system-uicons/filtering"
 
 const playback = defineModel<number>("modelValue", { required: true })
 const level = defineModel<number>("level", { required: true })

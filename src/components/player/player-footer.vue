@@ -155,8 +155,8 @@
 
 <script lang="ts" setup>
 import { useEventListener } from "@vueuse/core"
-import { parseTime } from "logic/parse-time"
 import type { Level } from "hls.js"
+import { parseTime } from "logic/parse-time"
 
 import type { AddKeybinding } from "./index.vue"
 

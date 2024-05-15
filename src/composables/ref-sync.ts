@@ -1,4 +1,5 @@
-import { UnwrapRef, computed } from "vue"
+import type { UnwrapRef } from "vue"
+import { computed } from "vue"
 
 export function refSync<T>(action: (state: T) => boolean, defaultValue: T) {
   const state = ref<T>(defaultValue)

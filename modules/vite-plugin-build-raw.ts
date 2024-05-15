@@ -1,3 +1,4 @@
+// eslint-disable-next-line n/no-extraneous-import
 import esbuild from "esbuild"
 // import { obfuscate } from "javascript-obfuscator"
 import type { Plugin } from "vite"

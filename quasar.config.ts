@@ -144,6 +144,7 @@ export default configure((/* ctx */ { prod }) => {
       viteVuePluginOptions: {
         template: {
           compilerOptions: {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             ["nodeTransforms" as unknown as any]: !process.env.DEV
               ? [removeDataTestAttrs]
               : []
@@ -228,6 +229,7 @@ export default configure((/* ctx */ { prod }) => {
 
     // https://v2.quasar.dev/quasar-cli-vite/developing-pwa/configuring-pwa
     pwa: {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ["workboxMode" as unknown as any]: "injectManifest", // or 'generateSW'
       injectPwaMetaTags: true,
       swFilename: "sw.js",

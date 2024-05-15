@@ -1,7 +1,7 @@
 <route lang="yaml">
 name: history
 </route>
-<template></template>
+<template>history</template>
 
 <script></script>
 

@@ -2,7 +2,7 @@
 name: history
 </route>
 
-<template></template>
+<template>history</template>
 
 <script lang="ts" setup>
 const route = useRoute()

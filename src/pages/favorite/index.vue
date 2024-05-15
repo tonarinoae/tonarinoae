@@ -2,7 +2,7 @@
 name: favorite
 </route>
 
-<template></template>
+<template>favorite</template>
 
 <script lang="ts" setup>
 const route = useRoute()

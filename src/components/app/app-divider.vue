@@ -69,22 +69,22 @@
 </template>
 
 <script lang="ts" setup>
-import homeLine from "~icons/solar/home-2-line-duotone"
-import homeBold from "~icons/solar/home-2-bold-duotone"
-import exploreLine from "~icons/solar/compass-line-duotone"
-import exploreBold from "~icons/solar/compass-bold-duotone"
-import fireLine from "~icons/solar/fire-line-duotone"
-import fireBold from "~icons/solar/fire-bold-duotone"
-import subLine from "~icons/solar/subtitles-line-duotone"
-import subBold from "~icons/solar/subtitles-bold-duotone"
-import layerLine from "~icons/solar/layers-line-duotone"
-import layerBold from "~icons/solar/layers-bold-duotone"
-import tuneLine from "~icons/solar/colour-tuneing-line-duotone"
 import tuneBold from "~icons/solar/colour-tuneing-bold-duotone"
-import historyLine from "~icons/solar/history-line-duotone"
+import tuneLine from "~icons/solar/colour-tuneing-line-duotone"
+import exploreBold from "~icons/solar/compass-bold-duotone"
+import exploreLine from "~icons/solar/compass-line-duotone"
+import fireBold from "~icons/solar/fire-bold-duotone"
+import fireLine from "~icons/solar/fire-line-duotone"
 import historyBold from "~icons/solar/history-bold-duotone"
-import favoriteLine from "~icons/solar/stars-minimalistic-line-duotone"
+import historyLine from "~icons/solar/history-line-duotone"
+import homeBold from "~icons/solar/home-2-bold-duotone"
+import homeLine from "~icons/solar/home-2-line-duotone"
+import layerBold from "~icons/solar/layers-bold-duotone"
+import layerLine from "~icons/solar/layers-line-duotone"
 import favoriteBold from "~icons/solar/stars-minimalistic-bold-duotone"
+import favoriteLine from "~icons/solar/stars-minimalistic-line-duotone"
+import subBold from "~icons/solar/subtitles-bold-duotone"
+import subLine from "~icons/solar/subtitles-line-duotone"
 
 const drawers = [
   {

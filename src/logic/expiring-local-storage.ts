@@ -1,4 +1,6 @@
+// eslint-disable-next-line functional/no-classes
 export class ExpiringLocalStorage {
+  // eslint-disable-next-line no-useless-constructor
   constructor(
     private readonly storage: Storage,
     private readonly expiryInMinutes: number
@@ -8,7 +10,7 @@ export class ExpiringLocalStorage {
     const now = new Date()
 
     const item = {
-      value: value,
+      value,
       expiry: now.getTime() + this.expiryInMinutes * 60 * 1000
     }
     this.storage.setItem(key, JSON.stringify(item))

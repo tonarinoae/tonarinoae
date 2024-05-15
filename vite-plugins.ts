@@ -7,9 +7,6 @@ import IconsResolver from "unplugin-icons/resolver"
 import Icons from "unplugin-icons/vite"
 import Components from "unplugin-vue-components/vite"
 import DefineOptions from "unplugin-vue-define-options/vite"
-// import { VueRouterAutoImports } from "unplugin-vue-router"
-// import VueRouter from "unplugin-vue-router/vite"
-import type { Plugin } from "vite"
 import { ViteImageOptimizer as ImageOptimizer } from "vite-plugin-image-optimizer"
 import imagePresets, { widthPreset } from "vite-plugin-image-presets"
 import RemoveConsole from "vite-plugin-remove-console"
@@ -19,6 +16,7 @@ import vitePluginBuildRaw from "./modules/vite-plugin-build-raw"
 import vitePluginI18nLangs from "./modules/vite-plugin-i18n-langs"
 
 export const vitePlugins: [
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (conf: object | undefined) => any,
   object | undefined
 ][] = [
