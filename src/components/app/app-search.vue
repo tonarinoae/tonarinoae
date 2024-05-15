@@ -11,14 +11,14 @@
       class="input-search"
       @focus="focusing = true"
       @blur="focusing = false"
-      @keypress.enter.prevent="{ name: 'search', params: { s: query }}"
+      @keypress.enter.prevent="$router.push({ name: 'search', params: { s: query }})"
     >
-      <template v-slot:append>
+      <template #append>
         <q-separator vertical inset class="bg-[rgba(153,153,153,0.3)]" />
         <button
           type="submit"
           class="flex items-center"
-          @click.stop.prevent="{ name: 'search', params: { s: query }}"
+          @click.stop.prevent="$router.push({ name: 'search', params: { s: query }})"
           @mousedown.stop.prevent
         >
           <q-icon name="search" class="pl-6 pr-4 cursor-pointer" />
@@ -70,13 +70,12 @@
 </template>
 
 <script lang="ts" setup>
-import { getSearch } from "api/index"
-import { refDebounced } from "@vueuse/core"
 import { useDebounceFn } from "@vueuse/core"
+import { getSearch } from "api/index"
 const focusing = ref(false)
 
 const query = ref("")
-const { data, loading, error, refresh } = useRequest(
+const { data, loading, refresh } = useRequest(
   () => getSearch(1, 30, "date", "desc", "", { s: query.value }),
   { manual: true }
 )
