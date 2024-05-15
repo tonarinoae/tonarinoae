@@ -11,14 +11,18 @@
       class="input-search"
       @focus="focusing = true"
       @blur="focusing = false"
-      @keypress.enter.prevent="$router.push({ name: 'search', params: { s: query }})"
+      @keypress.enter.prevent="
+        $router.push({ name: 'search', params: { s: query } })
+      "
     >
       <template #append>
         <q-separator vertical inset class="bg-[rgba(153,153,153,0.3)]" />
         <button
           type="submit"
           class="flex items-center"
-          @click.stop.prevent="$router.push({ name: 'search', params: { s: query }})"
+          @click.stop.prevent="
+            $router.push({ name: 'search', params: { s: query } })
+          "
           @mousedown.stop.prevent
         >
           <q-icon name="search" class="pl-6 pr-4 cursor-pointer" />

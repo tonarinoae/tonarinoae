@@ -1,6 +1,6 @@
 // import { Http } from "client-ext-animevsub-helper"
 
-import type { LocationQueryValue, RouteLocationRaw } from "vue-router"
+import type { LocationQueryValue, RouteLocationNormalized } from "vue-router"
 
 function fetchPolyfill(url: string, body?: URLSearchParams | string) {
   return fetch(url, {
@@ -113,7 +113,7 @@ export interface Watch {
   video: Video
   sections: {
     title: string
-    to: RouteLocationRaw
+    to: RouteLocationNormalized
     // eslint-disable-next-line no-use-before-define
     term?: Term
     videos: Video[]

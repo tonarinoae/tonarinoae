@@ -11,13 +11,13 @@ interface Route {
 
 const queryKeys = ["genres", "studios", "tags", "series", "years"] as const
 const queryTexts = ["thể loại", "studio", "tag", "series", "năm"]
-const taxonomyKeys: (keyof ReturnType<typeof useTaxonomyStore>)[] = [
+const taxonomyKeys = [
   "categories",
   "studios",
   "series",
   "series",
   "releaseYears"
-]
+] as const
 
 export function describeQueries(
   route: Route,

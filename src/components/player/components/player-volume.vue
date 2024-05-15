@@ -38,9 +38,11 @@
 <script lang="ts" setup>
 import { UseMouseInElement } from "@vueuse/components"
 
-import speaker0 from "~icons/fluent/speaker-off-24-regular"
+import type { AddKeybinding } from "../index.vue"
+
 import speaker1 from "~icons/fluent/speaker-1-24-regular"
 import speaker2 from "~icons/fluent/speaker-2-24-regular"
+import speaker0 from "~icons/fluent/speaker-off-24-regular"
 
 const props = defineProps<{
   addNotice: (text: string) => void

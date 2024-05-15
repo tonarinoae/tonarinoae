@@ -24,6 +24,6 @@
 import type { Term } from "api/index"
 
 defineProps<{
-  taxonomy: object
+  taxonomy: Term
 }>()
 </script>

@@ -43,6 +43,8 @@
 </template>
 
 <script lang="ts" setup>
+import type { Level } from "hls.js"
+
 defineProps<{
   levels: Level[]
 }>()

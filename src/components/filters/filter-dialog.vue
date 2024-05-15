@@ -24,7 +24,7 @@
 
       <q-card-section class="h-full overflow-y-auto">
         <div class="mx--2 mt-3" :class="classContent">
-          <slot v-for="item in items" :key="item.id" name="item" :data="item" />
+          <slot v-for="item in items" name="item" :data="item" />
         </div>
       </q-card-section>
 
@@ -35,7 +35,7 @@
   </q-dialog>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup generic="T extends { id: number }">
 defineProps<{
   label: string
   classContent?: string
@@ -56,9 +56,13 @@ const show = ref(false)
 const query = ref("")
 
 defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   action: (props: { onClick: () => void }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   item: (props: { data: T }) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   actions: () => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   addons: () => any
 }>()
 </script>

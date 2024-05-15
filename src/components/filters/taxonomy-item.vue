@@ -24,6 +24,8 @@
 </template>
 
 <script lang="ts" setup>
+import type { Explorer } from "api/index"
+
 defineProps<{
   genre: Explorer[0]
 
