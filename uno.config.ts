@@ -29,6 +29,7 @@ export default defineConfig({
   ],
   transformers: [transformerVariantGroup()],
   theme: {
+    dark: "class",
     breakpoints: {
       sm: "600px",
       md: "1024px",

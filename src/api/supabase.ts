@@ -44,11 +44,15 @@ export async function insertHentaiProgress(
     .throwOnError()
 }
 
-export async function getHentaiProgress(video: Video) {
+export async function getProgressHentai(video: Video) {
   return db
     .from("watch_progress")
     .select("cur, dur")
     .eq("hentai_id", video.id)
     .single()
     .throwOnError()
+}
+
+export async function getProgressHentaiList(video: Video[]) {
+  return db.from("watch_progress").select("cur, dur").in("hentai_id", video.map(item => item.id)).throwOnError()
 }

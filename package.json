@@ -3,9 +3,9 @@
   "packageName": "git.shin.tonarinoae",
   "version": "0.0.1",
   "type": "module",
-  "description": "となりのアニメへんたい (Tonari no Anime Ecchi)",
+  "description": "となりのアニメえっち (Tonari no Anime Ecchi)",
   "productName": "Example",
-  "productDescription": "となりのアニメへんたい (Tonari no Anime Ecchi)",
+  "productDescription": "となりのアニメえっち (Tonari no Anime Ecchi)",
   "author": "Tachibana Shin <45375496+tachibana-shin@users.noreply.github.com>",
   "private": true,
   "scripts": {
@@ -32,8 +32,8 @@
     "typing": "vue-tsc --noEmit",
     "ci": "bun run format && bun run lint --fix && bun run typing && bun run test:unit:ci",
     "nx": "nx run-many -t",
-    "gen:icon:cap": "icongenie generate -m capacitor -i src/assets/app_icon@large.png -b src/assets/bg-blur.png --png-color 000    --skip-trim",
-    "gen:icon:pwa": "icongenie generate -m pwa -i src/assets/app_icon@large.png -b src/assets/bg-blur.png --png-color 000   --skip-trim",
+    "gen:icon:cap": "icongenie generate -m capacitor -i src/assets/app_icon.png -b src/assets/bg-blur.png --png-color 000    --skip-trim",
+    "gen:icon:pwa": "icongenie generate -m pwa -i src/assets/app_icon.png -b src/assets/bg-blur.png --png-color 000   --skip-trim",
     "test:unit:ui": "vitest --ui",
     "test:unit": "vitest",
     "test:unit:ci": "vitest run",
@@ -53,6 +53,7 @@
     "release:npm": "bun run --filter ./npm/* run release"
   },
   "dependencies": {
+    "@fontsource/atma": "^5.0.20",
     "@hannoeru/eslint-plugin": "^0.9.7",
     "@quasar/extras": "^1.16.9",
     "@supabase/supabase-js": "^2.43.1",

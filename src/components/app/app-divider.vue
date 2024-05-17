@@ -15,7 +15,7 @@
 
       <router-link to="/" class="flex items-end">
         <img src="~assets/app_icon.png" width="35" height="35" />
-        <h1 class="text-h6 ml-1">iHentai</h1>
+        <h1 class="text-h6 ml-1">となりのアニメえっち</h1>
       </router-link>
     </q-toolbar>
 

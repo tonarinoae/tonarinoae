@@ -7,9 +7,9 @@ useHead({
   title: "%name",
   titleTemplate: "%s %separator Tonari no Anime Ecchi",
   templateParams: {
-    name: "となりのアニメへんたい (Tonari no Anime Ecchi)",
+    name: "となりのアニメえっち (Tonari no Anime Ecchi)",
     description:
-      "となりのアニメへんたい (Tonari no Anime Ecchi)は、膨大なアニメ動画コレクションへのアクセスを提供するウェブアプリケーションです。ユーザーは、カテゴリ、俳優、キーワードで動画を閲覧できます。このアプリケーションは、プレイリストの作成、後で見るために動画を保存し、友達と動画を共有する機能など、さまざまな機能も提供します。",
+      "となりのアニメえっち (Tonari no Anime Ecchi)は、膨大なアニメ動画コレクションへのアクセスを提供するウェブアプリケーションです。ユーザーは、カテゴリ、俳優、キーワードで動画を閲覧できます。このアプリケーションは、プレイリストの作成、後で見るために動画を保存し、友達と動画を共有する機能など、さまざまな機能も提供します。",
     separator: "-",
     url: "",
     site_name: "Tonari no Anime Ecchi"

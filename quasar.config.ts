@@ -101,15 +101,7 @@ export default configure((/* ctx */ { prod }) => {
 
       // publicPath: '/',
       // analyze: true,
-
-      env: Object.fromEntries(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        Object.entries(process.env as unknown as any).filter(
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          ([_name, value]) => !(value as string).includes("\\")
-        )
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ) as unknown as any,
+      
       // rawDefine: {},
       // ignorePublicFolder: true,
       // minify: false,

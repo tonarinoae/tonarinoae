@@ -74,4 +74,6 @@ import type { RouteLocationNormalized } from "vue-router"
 const { data, loading, error, refresh } = useRequest(() => {
   return home()
 })
+
+useAuthStore()
 </script>

@@ -1,6 +1,6 @@
 ![](src/assets/app_icon.png)
 
-となりのアニメへんたい (romaji: Tonari no Anime Ecchi)
+となりのアニメえっち (romaji: Tonari no Anime Ecchi)
 
 **_This app contains source code that allows access to "adult" content so make sure you are over 18 before accessing it_**
 
