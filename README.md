@@ -1,4 +1,4 @@
-![](src/assets/app_icon.png)
+<img src="src/assets/app_icon.png" width="120"/>
 
 となりのアニメえっち (romaji: Tonari no Anime Ecchi)
 
