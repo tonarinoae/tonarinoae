@@ -54,5 +54,12 @@ export async function getProgressHentai(video: Video) {
 }
 
 export async function getProgressHentaiList(video: Video[]) {
-  return db.from("watch_progress").select("cur, dur").in("hentai_id", video.map(item => item.id)).throwOnError()
+  return db
+    .from("watch_progress")
+    .select("cur, dur")
+    .in(
+      "hentai_id",
+      video.map((item) => item.id)
+    )
+    .throwOnError()
 }

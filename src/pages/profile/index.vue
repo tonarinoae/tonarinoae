@@ -1,5 +1,5 @@
-<route lang=yaml>
+<route lang="yaml">
 name: profile
-    </route>
+</route>
 
-    <template>Profile</template>
+<template>Profile</template>

@@ -1,4 +1,9 @@
-import { AuthError, type AuthResponse, type OAuthResponse, type Session} from "@supabase/supabase-js";
+import {
+  AuthError,
+  type AuthResponse,
+  type OAuthResponse,
+  type Session
+} from "@supabase/supabase-js"
 import { defineStore } from "pinia"
 
 function openCenteredPopup(url: string, title: string, w: number, h: number) {
@@ -46,7 +51,10 @@ export const useAuthStore = defineStore("auth", () => {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: new URL(router.resolve({ name: "oauth2" }).fullPath, location.toString()).href,
+          redirectTo: new URL(
+            router.resolve({ name: "oauth2" }).fullPath,
+            location.toString()
+          ).href,
           skipBrowserRedirect: true
         }
       })
@@ -125,7 +133,6 @@ export const useAuthStore = defineStore("auth", () => {
     return supabase.auth.signOut()
   }
 
-  
   const session = shallowRef<Session | null>(null)
 
   const setup = ref<Promise<void>>()
@@ -140,9 +147,19 @@ export const useAuthStore = defineStore("auth", () => {
     session.value = ses
   })
 
-  const isLogged = computed(() => setup.value === undefined && session.value !== null)
+  const isLogged = computed(
+    () => setup.value === undefined && session.value !== null
+  )
   const user = computed(() => session.value?.user)
 
-
-  return { setup, session, isLogged, user , signInOAuth2, signIn, signUp, signOut }
+  return {
+    setup,
+    session,
+    isLogged,
+    user,
+    signInOAuth2,
+    signIn,
+    signUp,
+    signOut
+  }
 })

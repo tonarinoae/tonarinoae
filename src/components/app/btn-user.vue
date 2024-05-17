@@ -80,9 +80,7 @@ const authStore = useAuthStore()
 
 const avatarUrl = computed(() => authStore.session?.user.user_metadata?.picture)
 const name = computed(
-  () =>
-    authStore.user?.user_metadata.full_name ??
-    "Anonymous"
+  () => authStore.user?.user_metadata.full_name ?? "Anonymous"
 )
 
 const userMenus = [

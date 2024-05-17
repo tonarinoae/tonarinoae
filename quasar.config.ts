@@ -101,7 +101,7 @@ export default configure((/* ctx */ { prod }) => {
 
       // publicPath: '/',
       // analyze: true,
-      
+
       // rawDefine: {},
       // ignorePublicFolder: true,
       // minify: false,

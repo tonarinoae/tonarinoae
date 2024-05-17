@@ -86,15 +86,30 @@
 
               <div class="relative py-2">
                 <q-separator />
-                <span class="absolute top-1/2 left-1/2 translate--1/2 bg-gray-50 dark:bg-gray-900 px-3">or</span>
+                <span
+                  class="absolute top-1/2 left-1/2 translate--1/2 bg-gray-50 dark:bg-gray-900 px-3"
+                  >or</span
+                >
               </div>
 
               <div class="flex items-center justify-around">
-                <q-btn no-caps unelevated class="bg-gray-800 py-1 mr-1" rounded @click="authStore.signInOAuth2('google')">
+                <q-btn
+                  no-caps
+                  unelevated
+                  class="bg-gray-800 py-1 mr-1"
+                  rounded
+                  @click="authStore.signInOAuth2('google')"
+                >
                   <i-logos-google-icon class="size-2em mr-1" />
                   Sign in with Google
                 </q-btn>
-                <q-btn no-caps unelevated class="bg-gray-800 py-1 ml-1" rounded @click="authStore.signInOAuth2('twitter')">
+                <q-btn
+                  no-caps
+                  unelevated
+                  class="bg-gray-800 py-1 ml-1"
+                  rounded
+                  @click="authStore.signInOAuth2('twitter')"
+                >
                   <i-logos-twitter class="size-2em mr-1" />
                   Sign in with Twttier
                 </q-btn>

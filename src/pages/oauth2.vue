@@ -8,7 +8,7 @@ meta:
 </route>
 
 <script lang="ts" setup>
-  import { useEventListener } from "@vueuse/core"
+import { useEventListener } from "@vueuse/core"
 
 const auth = useAuthStore()
 
