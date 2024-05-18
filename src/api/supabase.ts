@@ -1,10 +1,10 @@
 import type { Video } from "api/index"
 
-const hentaiMetaSaved = new Set<string>()
+const hentaiMetaSaved = new Set<number>()
 export async function upsertHentaiMeta(video: Video) {
-  if (hentaiMetaSaved.has(video.slug)) return
+  if (hentaiMetaSaved.has(video.id)) return
 
-  await db
+  await supabase
     .rpc("upsert_hentai_meta", {
       _raw_id: video.id,
       _alternative_titles: video.alternativeTitles,
@@ -19,11 +19,11 @@ export async function upsertHentaiMeta(video: Video) {
     })
     .throwOnError()
 
-  hentaiMetaSaved.add(video.slug)
+  hentaiMetaSaved.add(video.id)
 }
 
 export async function insertHentaiHistory(video: Video) {
-  return db
+  return supabase
     .rpc("emit_watch_history", {
       _hentai_id: video.id
     })
@@ -35,7 +35,7 @@ export async function insertHentaiProgress(
   _cur: number,
   _dur: number
 ) {
-  return db
+  return supabase
     .rpc("save_watch_progress", {
       _hentai_id: video.id,
       _cur,
@@ -45,7 +45,7 @@ export async function insertHentaiProgress(
 }
 
 export async function getProgressHentai(video: Video) {
-  return db
+  return supabase
     .from("watch_progress")
     .select("cur, dur")
     .eq("hentai_id", video.id)
@@ -54,7 +54,7 @@ export async function getProgressHentai(video: Video) {
 }
 
 export async function getProgressHentaiList(video: Video[]) {
-  return db
+  return supabase
     .from("watch_progress")
     .select("cur, dur")
     .in(

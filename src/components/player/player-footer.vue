@@ -25,7 +25,7 @@
           <div
             class="w-full bg-#fff/20 h-3px relative rounded-sm group-hover:h-5px progress-bar before:hidden"
             :class="{
-              '!before:block': timeHover !== null
+              '!before:inline-block': timeHover !== null
             }"
             :data-time="timeHover !== null ? parseTime(timeHover) : undefined"
             :style="{
@@ -302,13 +302,15 @@ props.addKeybinding("skip time", (event) => {
 .progress-bar {
   @apply relative;
 
-  &::before {
+  &:before {
     content: attr(data-time);
-    @apply absolute bottom-[100%] transform translate-x--1/2 translate-y-[-16px];
+    position: absolute;
+    bottom: 100%;
+    transform: translateX(-50%) translate(-16px);
     background: rgba(0, 0, 0, 0.7);
     @apply py-2 px-3 font-weight-medium rounded-lg;
-    left: var(--before-pos-x);
     white-space: pre-wrap;
+    left: var(--before-pos-x);
   }
 }
 </style>

@@ -285,7 +285,12 @@ export type AddKeybinding = typeof addKeybinding
 
 const hiddenTooltip = ref(false)
 
-defineExpose({ fullscreen: hFullscreen })
+defineExpose({
+  fullscreen: hFullscreen,
+  currentTime: hCurrentTime,
+  durationTime: hDuration,
+  addNotice
+})
 provide("fullscreen", hFullscreen)
 provide("hiddenTooltip", hiddenTooltip)
 provide("setHiddenTooltip", (val: boolean) => (hiddenTooltip.value = val))

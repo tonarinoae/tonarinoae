@@ -1,3 +1,4 @@
+import transformerDirectives from "@unocss/transformer-directives"
 import transformerVariantGroup from "@unocss/transformer-variant-group"
 import { presetOnu } from "onu-ui"
 import {
@@ -27,7 +28,7 @@ export default defineConfig({
     [/^font-size-(.+)/, ([, value]) => ({ "font-size": value })],
     [/^grid-area-(.+)/, ([, value]) => ({ "grid-area": value })]
   ],
-  transformers: [transformerVariantGroup()],
+  transformers: [transformerDirectives(), transformerVariantGroup()],
   theme: {
     dark: "class",
     breakpoints: {

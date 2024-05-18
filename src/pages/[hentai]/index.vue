@@ -559,6 +559,8 @@ const router = useRouter()
 const route = useRoute()
 const $q = useQuasar()
 
+const authStore = useAuthStore()
+
 const siloRef = ref<HTMLDivElement>()
 
 const playerRef = ref<InstanceType<typeof Player>>()
@@ -662,6 +664,83 @@ watch(
       document.documentElement.classList.add("scrollbar-hidden")
     } else {
       document.documentElement.classList.remove("scrollbar-hidden")
+    }
+  }
+)
+
+import { watchThrottled, useThrottleFn } from "@vueuse/core"
+import {
+  upsertHentaiMeta,
+  insertHentaiHistory as $insertHentaiHistory,
+  insertHentaiProgress,
+  getProgressHentai
+} from "api/supabase"
+
+const insertHentaiHistory = useThrottleFn($insertHentaiHistory, {
+  throttle: 60_000
+})
+const restoredProgressStore = new Set<number>()
+const restoringProgressStore = new Set<number>()
+
+watchThrottled(
+  [
+    () => playerRef.value?.currentTime,
+    () => playerRef.value?.durationTime,
+    () => data.value?.video,
+    () => authStore.isLogged
+  ],
+  async ([currentTime, durationTime, video, isLogged]) => {
+    if (!isLogged) return
+
+    if (
+      !video ||
+      !durationTime ||
+      durationTime < currentTime ||
+      typeof currentTime !== "number" ||
+      Number.isNaN(currentTime) ||
+      !durationTime
+    )
+      return
+
+    if (restoringProgressStore.has(video.id)) {
+      WARN("skip save progress because restoring progress id %i", video.id)
+      return
+    }
+    if (!restoredProgressStore.has(video.id)) {
+      WARN("skip save progress because not restore progress")
+      return
+    }
+
+    // init data
+    await upsertHentaiMeta(video)
+    // save history
+    await insertHentaiHistory(video)
+    // save progress
+    await insertHentaiProgress(video, currentTime, durationTime)
+  },
+  { throttle: 10_000 }
+)
+
+watch(
+  [() => playerRef.value, () => data.value?.video, () => authStore.isLogged],
+  async ([playerRef, video, isLogged]) => {
+    if (!isLogged) return
+
+    if (!video || !playerRef) return
+
+    restoringProgressStore.add(video.id)
+
+    try {
+      const { data } = await getProgressHentai(video)
+      // restore now
+      console.log({ data })
+      playerRef.currentTime = data.cur
+      playerRef.addNotice(`Khôi phục tiến trình xem ${parseTime(data.cur)}`)
+    } catch (err) {
+      WARN(err)
+    } finally {
+      restoringProgressStore.delete(video.id)
+      restoredProgressStore.add(video.id)
     }
   }
 )
