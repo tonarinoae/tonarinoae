@@ -76,4 +76,9 @@ const { data, loading, error, refresh } = useRequest(() => {
 })
 
 useAuthStore()
+
+void FirebaseAnalytics.logEvent({
+  name: "home",
+  params: {}
+})
 </script>

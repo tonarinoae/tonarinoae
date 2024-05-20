@@ -71,4 +71,8 @@ useHead({
     url: () => route.fullPath
   }
 })
+void FirebaseAnalytics.logEvent({
+  name: "gacha",
+  params: {}
+})
 </script>

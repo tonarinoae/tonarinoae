@@ -1,11 +1,9 @@
 import { getExplorer } from "api/index"
 import { get, set } from "idb-keyval"
-import { ExpiringLocalStorage } from "logic/expiring-local-storage"
 import { defineStore } from "pinia"
 import type { Ref } from "vue"
 
 function useStorageContract<T>(
-  storage: ExpiringLocalStorage,
   name: string,
   defaultValue: T,
   fn: () => Promise<T>
@@ -36,18 +34,12 @@ function useStorageContract<T>(
 }
 
 export const useTaxonomyStore = defineStore("taxonomy", () => {
-  const storage = new ExpiringLocalStorage(localStorage, 60 * 24 * 30)
-
-  const categories = useStorageContract(storage, "category", [], () =>
+  const categories = useStorageContract("category", [], () =>
     getExplorer("category")
   )
-  const series = useStorageContract(storage, "series", [], () =>
-    getExplorer("series")
-  )
-  const studios = useStorageContract(storage, "studios", [], () =>
-    getExplorer("studio")
-  )
-  const releaseYears = useStorageContract(storage, "releaseYears", [], () =>
+  const series = useStorageContract("series", [], () => getExplorer("series"))
+  const studios = useStorageContract("studios", [], () => getExplorer("studio"))
+  const releaseYears = useStorageContract("releaseYears", [], () =>
     getExplorer("release_year")
   )
 

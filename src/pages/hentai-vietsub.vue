@@ -235,4 +235,18 @@ useHead({
     url: () => route.fullPath
   }
 })
+watch(
+  [() => props.title, data, () => route.query.page],
+  ([title, data, page]) => {
+    if (!data) return
+
+    void FirebaseAnalytics.logEvent({
+      name: title,
+      params: {
+        page,
+        title
+      }
+    })
+  }
+)
 </script>

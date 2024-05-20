@@ -605,6 +605,17 @@ useHead({
     }
   ]
 })
+watch(data, (data) => {
+  if (!data) return
+
+  void FirebaseAnalytics.logEvent({
+    name: "watching",
+    params: {
+      season: data.video.tags[0].name,
+      title: data.video.title
+    }
+  })
+})
 
 // /search?page=1&limit=24&orderby=date&order=desc&tags=slime-living-together&searchBy=slug
 const series = computedAsync(

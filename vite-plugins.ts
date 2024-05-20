@@ -62,7 +62,8 @@ export const vitePlugins: [
           "@vueuse/router": ["useRouteQuery"],
           quasar: ["useQuasar"],
           "vue-request": ["useRequest"],
-          "vue-i18n": ["useI18n"]
+          "vue-i18n": ["useI18n"],
+          "@capacitor-community/firebase-analytics": ["FirebaseAnalytics"]
         },
         unheadVueComposablesImports
       ],

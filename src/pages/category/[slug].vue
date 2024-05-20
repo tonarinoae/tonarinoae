@@ -286,6 +286,21 @@ const { data, current, loading, error, refreshAsync } = usePagination(
     ]
   }
 )
+watch(
+  [() => props.type, mData, () => $route.query.page],
+  ([type, data, page]) => {
+    if (!data) return
+
+    void FirebaseAnalytics.logEvent({
+      name: type,
+      params: {
+        title: data.name,
+        page
+      }
+    })
+  }
+)
+
 watchImmediate(idValue, (value) => {
   if (value) void refreshAsync()
 })

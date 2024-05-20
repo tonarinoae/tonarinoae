@@ -42,5 +42,12 @@ export default route((/* { store, ssrContext } */) => {
     history: createHistory(process.env.VUE_ROUTER_BASE)
   })
 
+  Router.afterEach((to) => {
+    FirebaseAnalytics.setScreenName({
+      screenName: to.name?.toString() ?? to.fullPath,
+      nameOverride: to.name?.toString()
+    })
+  })
+
   return Router
 })

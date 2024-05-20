@@ -151,12 +151,67 @@ export const useAuthStore = defineStore("auth", () => {
     () => setup.value === undefined && session.value !== null
   )
   const user = computed(() => session.value?.user)
+  const profile = computedAsync(
+    async () => {
+      if (!user.value) return null
+
+      return await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", user.value.id)
+        .single()
+        .throwOnError()
+    },
+    undefined,
+    { onError: WARN }
+  )
+
+  watch([user, profile], ([user, profile]) => {
+    if (user) {
+      FirebaseAnalytics.setUserId({
+        userId: user.id
+      })
+      FirebaseAnalytics.setUserProperty({
+        name: "email",
+        value: user.email ?? ""
+      })
+    } else {
+      FirebaseAnalytics.setUserId({
+        userId: ""
+      })
+      FirebaseAnalytics.setUserProperty({
+        name: "email",
+        value: ""
+      })
+    }
+
+    if (profile?.data) {
+      FirebaseAnalytics.setUserProperty({
+        name: "first_name",
+        value: profile.data.first_name
+      })
+      FirebaseAnalytics.setUserProperty({
+        name: "last_name",
+        value: profile.data.last_name
+      })
+    } else {
+      FirebaseAnalytics.setUserProperty({
+        name: "first_name",
+        value: ""
+      })
+      FirebaseAnalytics.setUserProperty({
+        name: "last_name",
+        value: ""
+      })
+    }
+  })
 
   return {
     setup,
     session,
     isLogged,
     user,
+    profile,
     signInOAuth2,
     signIn,
     signUp,
