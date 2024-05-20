@@ -15,7 +15,8 @@
     "Noncomliant",
     "othername",
     "phút",
-    "sakura"
+    "sakura",
+    "supabase"
   ],
   "ionic.previewInEditor": true,
   "vue-i18n.i18nPaths": "src/i18n",

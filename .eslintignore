@@ -6,3 +6,4 @@
 .eslintrc.js
 /src-ssr
 /quasar.config.js
+/database.d.ts
