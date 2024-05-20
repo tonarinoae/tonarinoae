@@ -546,7 +546,14 @@ meta:
 </template>
 
 <script lang="ts" setup>
+import { useThrottleFn, watchThrottled } from "@vueuse/core"
 import { getSearch, getWatch } from "api/index"
+import {
+  insertHentaiHistory as $insertHentaiHistory,
+  getProgressHentai,
+  insertHentaiProgress,
+  upsertHentaiMeta
+} from "api/supabase"
 import Player from "components/player/index.vue"
 import { convertNumber } from "logic/convert-number"
 import dayjs from "logic/dayjs"
@@ -668,17 +675,7 @@ watch(
   }
 )
 
-import { watchThrottled, useThrottleFn } from "@vueuse/core"
-import {
-  upsertHentaiMeta,
-  insertHentaiHistory as $insertHentaiHistory,
-  insertHentaiProgress,
-  getProgressHentai
-} from "api/supabase"
-
-const insertHentaiHistory = useThrottleFn($insertHentaiHistory, {
-  throttle: 60_000
-})
+const insertHentaiHistory = useThrottleFn($insertHentaiHistory, 60_000)
 const restoredProgressStore = new Set<number>()
 const restoringProgressStore = new Set<number>()
 
@@ -734,6 +731,8 @@ watch(
       const { data } = await getProgressHentai(video)
       // restore now
       console.log({ data })
+      if (typeof data?.cur !== "number") throw data
+
       playerRef.currentTime = data.cur
       playerRef.addNotice(`Khôi phục tiến trình xem ${parseTime(data.cur)}`)
     } catch (err) {
