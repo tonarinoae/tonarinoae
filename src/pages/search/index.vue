@@ -218,15 +218,18 @@ useHead({
     url: () => route.fullPath
   }
 })
-watch([data, () => $route.query.s, () => $route.query.page], (data, keyword, page) => {
-  if (!data) return
+watch(
+  [data, () => $route.query.s, () => $route.query.page],
+  (data, keyword, page) => {
+    if (!data) return
 
-  void FirebaseAnalytics.logEvent({
-    name: "search",
-    params: {
-      keyword,
-      page
-    }
-  })
-})
+    void FirebaseAnalytics.logEvent({
+      name: "search",
+      params: {
+        keyword,
+        page
+      }
+    })
+  }
+)
 </script>

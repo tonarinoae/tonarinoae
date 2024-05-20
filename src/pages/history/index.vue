@@ -15,14 +15,17 @@ useHead({
     url: () => route.fullPath
   }
 })
-watch(() => route.query.page, (page) => {
-  if (!page) return
+watch(
+  () => route.query.page,
+  (page) => {
+    if (!page) return
 
-  void FirebaseAnalytics.logEvent({
-    name: "history",
-    params: {
-      page
-    }
-  })
-})
+    void FirebaseAnalytics.logEvent({
+      name: "history",
+      params: {
+        page
+      }
+    })
+  }
+)
 </script>

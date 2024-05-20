@@ -28,7 +28,6 @@ watchImmediate(
 
 useEventListener(window, "close", () => window.close?.())
 
-
 void FirebaseAnalytics.logEvent({
   name: "oauth2",
   params: {}

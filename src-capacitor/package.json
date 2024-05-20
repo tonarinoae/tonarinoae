@@ -1,0 +1,14 @@
+{
+  "name": "tonarinoae",
+  "version": "0.0.1",
+  "description": "となりのアニメえっち (Tonari no Anime Ecchi)",
+  "author": "Tachibana Shin <45375496+tachibana-shin@users.noreply.github.com>",
+  "private": true,
+  "dependencies": {
+    "@capacitor-community/firebase-analytics": "^6.0.0",
+    "@capacitor/android": "^6.0.0",
+    "@capacitor/app": "^6.0.0",
+    "@capacitor/cli": "^6.0.0",
+    "@capacitor/core": "^6.0.0"
+  }
+}
