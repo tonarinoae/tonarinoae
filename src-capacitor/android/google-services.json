@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "245597826360",
+    "project_id": "tonarinoae",
+    "storage_bucket": "tonarinoae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:245597826360:android:38a76b78c65f84d65565cd",
+        "android_client_info": {
+          "package_name": "git.shin.tonarinoae"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASaOmN9GDRRtVkab8gwaijvHOoqogXO3Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
