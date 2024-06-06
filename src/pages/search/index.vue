@@ -113,13 +113,7 @@ name: search
         <card-vertical-skeleton />
       </div>
     </div>
-    <div v-else class="text-center col-12 py-8 px-6">
-      <code class="block">{{ error }}</code>
-
-      <q-btn rounded color="blue" no-caps class="mt-3" @click="refresh"
-        >Thử lại</q-btn
-      >
-    </div>
+    <screen-error v-else :error :refresh />
   </q-page>
 </template>
 

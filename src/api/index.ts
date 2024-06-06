@@ -2,9 +2,10 @@
 
 import type { LocationQueryValue, RouteLocationNormalized } from "vue-router"
 
-function fetchPolyfill(url: string, body?: URLSearchParams | string) {
+function fetchPolyfill(url: string, body?: URLSearchParams | string, signal?: AbortSignal) {
   return fetch(url, {
     body,
+    signal,
     method: body ? "post" : "get"
   })
   // return Http[body ? "post" : "get"]({ url, data: body?.toString() }).then(
@@ -119,8 +120,8 @@ export interface Watch {
     videos: Video[]
   }[]
 }
-export function getWatch(slug: string): Promise<Watch> {
-  return fetchPolyfill(`${API_URL}/watch?slug=${slug}`).then((res) =>
+export function getWatch(slug: string, signal: AbortSignal): Promise<Watch> {
+  return fetchPolyfill(`${API_URL}/watch?slug=${slug}`, undefined, signal).then((res) =>
     res.json()
   )
 }

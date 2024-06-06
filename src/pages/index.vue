@@ -21,13 +21,7 @@ name: home
         <card-vertical-skeleton />
       </div>
     </div>
-    <div v-else-if="error || !data" class="text-center col-12 py-8 px-6">
-      <code class="block">{{ error }}</code>
-
-      <q-btn rounded color="blue" no-caps class="mt-3" @click="refresh"
-        >Thử lại</q-btn
-      >
-    </div>
+    <screen-error v-else-if="error || !data" :error :refresh />
     <div
       v-else
       v-for="section in data?.sections"

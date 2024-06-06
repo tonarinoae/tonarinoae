@@ -1,7 +1,8 @@
-import type { Video } from "api/index"
-
-export function getEpisodeName(video: Video): string {
-  if (video.title.startsWith(video.tags[0]?.name))
+export function getEpisodeName(video: {
+  title: string
+  tags?: { name: string }[]
+}): string {
+  if (video.tags?.[0] && video.title.startsWith(video.tags[0].name))
     return video.title
       .slice(video.tags[0].name.length)
       .replace(/the animation/i, "")
@@ -11,5 +12,5 @@ export function getEpisodeName(video: Video): string {
 
   const lastIndexSpace = title.lastIndexOf(" ") >>> 0
 
-  return title.slice(lastIndexSpace + 1) ?? "Full"
+  return title.slice(lastIndexSpace + 1) || "Full"
 }

@@ -52,7 +52,7 @@
     "release:npm": "bun run --filter ./npm/* run release"
   },
   "dependencies": {
-    "@capacitor-community/firebase-analytics": "5",
+    "@capacitor-community/firebase-analytics": "^6.0.0",
     "@fontsource/atma": "^5.0.20",
     "@hannoeru/eslint-plugin": "^0.9.7",
     "@quasar/extras": "^1.16.9",

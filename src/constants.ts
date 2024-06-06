@@ -10,3 +10,7 @@ export const playbacks = [
   { name: "0.5x", value: 0.5 }
 ]
 export const NOOP = () => {}
+export const EMPTY_ARR = Object.freeze([])
+export function createEmptyArray<T>() {
+  return EMPTY_ARR as unknown  as T[]
+}

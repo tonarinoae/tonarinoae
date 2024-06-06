@@ -1,7 +1,7 @@
 <template>
   <q-btn round unelevated>
-    <i-solar-bookmark-bold-duotone v-if="show" class="size-24px" />
-    <i-solar-bookmark-line-duotone v-else class="size-24px" />
+    <i-fluent-bookmark-24-filled v-if="show" class="size-24px" />
+    <i-fluent-bookmark-24-regular v-else class="size-24px" />
   </q-btn>
 </template>
 

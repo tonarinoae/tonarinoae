@@ -43,7 +43,8 @@ meta:
                 class="text-18px leading-normal font-600 truncate"
                 :class="{
                   'text-20px': $q.screen.width > 617 && fullscreenOrLtMd,
-                  'text-25px': $q.screen.width > 814 && fullscreenOrLtMd
+                  'text-22px': $q.screen.width > 617 && playerRef?.fullscreen,
+                  'text-25px': $q.screen.width > 1124 && fullscreenOrLtMd
                 }"
               >
                 {{ data.video.tags[0]?.name ?? data.video.title }}
@@ -51,8 +52,9 @@ meta:
               <h3
                 class="text-16px leading-normal truncate"
                 :class="{
-                  'text-18px': $q.screen.width > 617 && fullscreenOrLtMd,
-                  'text-20px': $q.screen.width > 814 && fullscreenOrLtMd
+                  'text-16px': $q.screen.width > 617 && fullscreenOrLtMd,
+                  'text-18px': $q.screen.width > 617 && playerRef?.fullscreen,
+                  'text-20px': $q.screen.width > 1124 && fullscreenOrLtMd
                 }"
               >
                 Tập {{ getEpisodeName(data.video) }}
@@ -359,13 +361,7 @@ meta:
               </div>
             </div>
           </div>
-          <div v-else-if="error" class="text-center col-12 py-8 px-6">
-            <code class="block">{{ error }}</code>
-
-            <q-btn rounded color="blue" no-caps class="mt-3" @click="refresh"
-              >Thử lại</q-btn
-            >
-          </div>
+          <screen-error v-else-if="error" :error :refresh />
           <div
             v-else
             class="px-4 col-12"
@@ -471,7 +467,9 @@ meta:
         >
           <!-- playlist series -->
           <div v-if="series" class="bg-#a1a1a1/10 rounded-xl px-4 pt-3">
-            <h1 class="col-12 text-h6 px-2 flex items-center justify-between">
+            <h1
+              class="col-12 leading-normal text-16px md:text-h6 px-2 flex items-center justify-between truncate"
+            >
               Danh sách phát ({{ series.count }})
             </h1>
 
@@ -481,6 +479,7 @@ meta:
                 :key="video.id"
                 :video
                 :horizontal="$q.screen.width > 960 || $q.screen.width < 625"
+                :p-watch="seriesPWatch?.get(video.id)"
                 class="py-3 px-4 col-12"
                 :class="{
                   // '!w-1/2': $q.screen.width > 500 && ($q.screen.width < 625),
@@ -498,8 +497,12 @@ meta:
             :key="section.title"
             class="mt-6"
           >
-            <h1 class="text-h6 flex items-center justify-between">
-              {{ section.title }}
+            <h1
+              class="leading-normal text-16px md:text-h6 flex items-center justify-between"
+            >
+              <span class="inline-block truncate min-w-0">
+                {{ section.title }}
+              </span>
 
               <router-link
                 v-if="section.to"
@@ -519,7 +522,11 @@ meta:
                   '!w-1/2': $q.screen.width > 500 && $q.screen.width < 625
                 }"
               >
-                <card-vertical :video :horizontal="$q.screen.width > 960" />
+                <card-vertical
+                  :video
+                  :horizontal="$q.screen.width > 960"
+                  :p-watch="sectionsPWatch?.get(video.id)"
+                />
               </div>
             </div>
           </div>
@@ -547,6 +554,7 @@ meta:
 
 <script lang="ts" setup>
 import { useThrottleFn, watchThrottled } from "@vueuse/core"
+import type { Video} from "api/index";
 import { getSearch, getWatch } from "api/index"
 import {
   insertHentaiHistory as $insertHentaiHistory,
@@ -568,6 +576,8 @@ const $q = useQuasar()
 
 const authStore = useAuthStore()
 
+const abortStore = useAbortStore()
+
 const siloRef = ref<HTMLDivElement>()
 
 const playerRef = ref<InstanceType<typeof Player>>()
@@ -577,8 +587,17 @@ const fullscreenOrLtMd = computed(() => {
   return $q.screen.lt.md
 })
 
+const masterSignal = computed(() =>
+  abortStore.set(props.hentai, new AbortController())
+)
 const { data, loading, error, refresh } = useRequest(
-  () => getWatch(props.hentai),
+  () =>
+    getWatch(props.hentai, masterSignal.value).then((data) => {
+      if (data.sections[0]?.title.toLocaleLowerCase() === "phim gợi ý")
+        data.sections.shift()
+
+      return data
+    }),
   {
     refreshDeps: () => props.hentai
   }
@@ -686,6 +705,7 @@ watch(
   }
 )
 
+// =============== api save / restore progress watch =============
 const insertHentaiHistory = useThrottleFn($insertHentaiHistory, 60_000)
 const restoredProgressStore = new Set<number>()
 const restoringProgressStore = new Set<number>()
@@ -719,12 +739,19 @@ watchThrottled(
       return
     }
 
+    if (video.isTrailer) return WARN("skip save progress because is trailer")
+
     // init data
-    await upsertHentaiMeta(video)
+    await upsertHentaiMeta(video, masterSignal.value)
     // save history
-    await insertHentaiHistory(video)
+    await insertHentaiHistory(video, masterSignal.value)
     // save progress
-    await insertHentaiProgress(video, currentTime, durationTime)
+    await insertHentaiProgress(
+      video,
+      currentTime,
+      durationTime,
+      masterSignal.value
+    )
   },
   { throttle: 10_000 }
 )
@@ -739,7 +766,7 @@ watch(
     restoringProgressStore.add(video.id)
 
     try {
-      const { data } = await getProgressHentai(video)
+      const { data } = await getProgressHentai(video, masterSignal.value)
       // restore now
       console.log({ data })
       if (typeof data?.cur !== "number") throw data
@@ -754,4 +781,32 @@ watch(
     }
   }
 )
+// =============== /api save / restore progress watch =============
+
+// =============== api get progress watch in videos ================
+const sectionsPWatch = usePWatchVideos(() => {
+  if (!data.value) return createEmptyArray<Video>()
+
+  return Array.from(
+    new Set(
+      data.value.sections.reduce(
+        (arr, section) => {
+          arr.push(...section.videos)
+          return arr
+        },
+        <Video[]>[]
+      )
+    )
+  )
+}, masterSignal)
+
+// =============== /api get progress watch in videos ================
+
+// ================== api get progress watch in series ==================
+const seriesPWatch = usePWatchVideos(() => {
+  if (!series.value) return  createEmptyArray<Video>()
+
+  return series.value.videos
+}, masterSignal)
+// ================== /api get progress watch in series ==================
 </script>

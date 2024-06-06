@@ -36,6 +36,18 @@
           />
         </div>
 
+        <div
+          v-if="pWatch"
+          class="absolute w-100% h-5px !py-0 left-0 bottom-0 !bg-#fff/20 backdrop-blur-5px"
+        >
+          <span
+            class="block absolute h-full top-0 left-0 bg-fuchsia-400 rounded-xl"
+            :style="{
+              width: `${Math.round((pWatch.cur / pWatch.dur) * 100)}%`
+            }"
+          />
+        </div>
+
         <span
           class="absolute left-1 bottom-1 bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-gray-700 dark:text-gray-300 !bg-opacity-80 truncate max-w-70%"
         >
@@ -143,6 +155,7 @@ const props = defineProps<{
   video: Video
 
   horizontal?: boolean
+  pWatch?: Readonly<{ cur: number; dur: number }>
 }>()
 
 const epName = computed(() => getEpisodeName(props.video))

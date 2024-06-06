@@ -168,38 +168,38 @@ export const useAuthStore = defineStore("auth", () => {
 
   watch([user, profile], ([user, profile]) => {
     if (user) {
-      FirebaseAnalytics.setUserId({
+      void FirebaseAnalytics.setUserId({
         userId: user.id
       })
-      FirebaseAnalytics.setUserProperty({
+      void FirebaseAnalytics.setUserProperty({
         name: "email",
         value: user.email ?? ""
       })
     } else {
-      FirebaseAnalytics.setUserId({
+      void FirebaseAnalytics.setUserId({
         userId: ""
       })
-      FirebaseAnalytics.setUserProperty({
+      void FirebaseAnalytics.setUserProperty({
         name: "email",
         value: ""
       })
     }
 
     if (profile?.data) {
-      FirebaseAnalytics.setUserProperty({
+      void FirebaseAnalytics.setUserProperty({
         name: "first_name",
         value: profile.data.first_name
       })
-      FirebaseAnalytics.setUserProperty({
+      void FirebaseAnalytics.setUserProperty({
         name: "last_name",
         value: profile.data.last_name
       })
     } else {
-      FirebaseAnalytics.setUserProperty({
+      void FirebaseAnalytics.setUserProperty({
         name: "first_name",
         value: ""
       })
-      FirebaseAnalytics.setUserProperty({
+      void FirebaseAnalytics.setUserProperty({
         name: "last_name",
         value: ""
       })

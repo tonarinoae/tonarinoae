@@ -6,6 +6,7 @@
       '!h-screen !w-screen fullscreen-mode': hFullscreen,
       'is-mobile': $q.platform.is.mobile
     }"
+      @mousemove="resetTimeDelayControl(), (hControlShow = true)"
   >
     <video
       ref="videoRef"
@@ -27,7 +28,6 @@
       @suspend="hLoading = false"
       @waiting="hLoading = true"
       @ended="onEnd"
-      @mousemove="resetTimeDelayControl(), (hControlShow = true)"
     />
     <div class="absolute size-100% top-0 left-0" @click="onClickBackdrop" />
 

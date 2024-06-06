@@ -1,6 +1,6 @@
 <template>
   <q-drawer
-    :model-value="hideDrawer ? modelValue : true"
+    :model-value="(hideDrawer ? modelValue : true) && !$q.fullscreen.isActive"
     @update:model-value="modelValue = $event"
     :width="250"
     :breakpoint="500"
