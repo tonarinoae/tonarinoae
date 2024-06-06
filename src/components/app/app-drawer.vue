@@ -179,6 +179,7 @@ const drawersBottom = computed(() => [
   }
 ])
 
+const route = useRoute()
 const modelValue = defineModel<boolean>("modelValue", { required: true })
-const hideDrawer = computed(() => false)
+const hideDrawer = computed(() => route.meta.hideDrawer)
 </script>

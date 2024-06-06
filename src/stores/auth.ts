@@ -176,13 +176,13 @@ export const useAuthStore = defineStore("auth", () => {
         value: user.email ?? ""
       })
     } else {
-      void FirebaseAnalytics.setUserId({
-        userId: ""
-      })
-      void FirebaseAnalytics.setUserProperty({
-        name: "email",
-        value: ""
-      })
+      // void FirebaseAnalytics.setUserId({
+      //   userId: ""
+      // })
+      // void FirebaseAnalytics.setUserProperty({
+      //   name: "email",
+      //   value: ""
+      // })
     }
 
     if (profile?.data) {
