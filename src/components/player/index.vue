@@ -6,7 +6,7 @@
       '!h-screen !w-screen fullscreen-mode': hFullscreen,
       'is-mobile': $q.platform.is.mobile
     }"
-      @mousemove="resetTimeDelayControl(), (hControlShow = true)"
+    @mousemove="resetTimeDelayControl(), (hControlShow = true)"
   >
     <video
       ref="videoRef"

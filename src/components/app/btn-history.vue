@@ -14,7 +14,13 @@
         <screen-error v-else-if="error || !data" :error :refresh />
         <div v-else>
           <template v-for="(item, index) in data" :key="item.slug">
-            <h4 v-if="index === 0 || item.watched_at_d.format('DD/MM') !== (data[index-1]?.watched_at_d).format('DD/MM')">
+            <h4
+              v-if="
+                index === 0 ||
+                item.watched_at_d.format('DD/MM') !==
+                  (data[index - 1]?.watched_at_d).format('DD/MM')
+              "
+            >
               <template v-if="item.watched_at_d.isToday()"> Hôm nay </template>
               <template v-else-if="item.watched_at_d.isYesterday()">
                 Hôm qua
