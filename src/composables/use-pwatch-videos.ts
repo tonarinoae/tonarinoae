@@ -10,8 +10,8 @@ export function usePWatchVideos(
     number,
     {
       id: number
-      cur: number 
-      dur: number 
+      cur: number
+      dur: number
     }
   >>(
     async () => {

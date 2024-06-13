@@ -1,4 +1,4 @@
-export const API_URL = "https://ihentai.vc/api"
+export const API_URL = "https://ihentai.cam/api"
 
 export const WARN = console.warn.bind(console)
 export const playbacks = [
@@ -12,5 +12,5 @@ export const playbacks = [
 export const NOOP = () => {}
 export const EMPTY_ARR = Object.freeze([])
 export function createEmptyArray<T>() {
-  return EMPTY_ARR as unknown  as T[]
+  return EMPTY_ARR as unknown as T[]
 }

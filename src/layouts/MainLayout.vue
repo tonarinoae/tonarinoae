@@ -13,5 +13,5 @@
 </template>
 
 <script lang="ts" setup>
-const showDivider = ref(false)
+const showDivider = ref(true)
 </script>

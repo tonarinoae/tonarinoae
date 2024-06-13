@@ -1,11 +1,11 @@
 <template>
   <q-drawer
-    :model-value="(hideDrawer ? modelValue : true) && !$q.fullscreen.isActive"
+    :model-value="(!hideDrawer ? true : modelValue) && !$q.fullscreen.isActive"
     @update:model-value="modelValue = $event"
     :width="250"
     :breakpoint="500"
-    :mini="hideDrawer ? false : !modelValue"
-    :overlay="hideDrawer"
+    :overlay="!!hideDrawer"
+    :mini="!hideDrawer ? modelValue : false"
     :behavior="hideDrawer ? 'mobile' : undefined"
     class="!bg-[var(--q-dark-page)] overflow-visible column flex-nowrap"
   >
@@ -60,7 +60,7 @@
         </template>
       </q-list>
 
-      <div v-if="!(hideDrawer ? false : !modelValue)" class="text-gray-500">
+      <div v-if="!(!hideDrawer ? modelValue : false)" class="text-gray-500">
         <a
           v-for="item in drawersBottom"
           :key="item.name"
@@ -182,4 +182,5 @@ const drawersBottom = computed(() => [
 const route = useRoute()
 const modelValue = defineModel<boolean>("modelValue", { required: true })
 const hideDrawer = computed(() => route.meta.hideDrawer)
+const miniMode = computed(() => route.meta.miniMode)
 </script>
