@@ -88,7 +88,7 @@ See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-
 | Save progress watch                 | [x]       |
 | Show progress all list              | [x]       |
 | Show series in player on fullscreen | [ ]       |
-| Follows anime system                | [ ]       |
+| Follows anime system                | [x]       |
 | Playlist anime system               | [ ]       |
 | SEO                                 | [x]       |
 | Control empty data                  | [ ]       |

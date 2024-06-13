@@ -72,3 +72,24 @@ export async function getProgressHentaiList(
     .abortSignal(signal)
     .throwOnError()
 }
+
+export async function getHentaiFollowed(video: Video, signal?: AbortSignal) {
+  const $this = supabase.rpc("check_hentai_follow", { _hentai_id: video.id })
+  if (signal) return $this.abortSignal(signal).throwOnError()
+
+  return $this.throwOnError()
+}
+export async function updateHentaiFollowed(
+  video: Video,
+  value: boolean,
+  signal?: AbortSignal
+) {
+  const $this = supabase.rpc("toggle_hentai_follow", {
+    _hentai_id: video.id,
+    value
+  })
+
+  if (signal) return $this.abortSignal(signal).throwOnError()
+
+  return $this.throwOnError()
+}

@@ -255,24 +255,7 @@ meta:
               </div>
 
               <div class="flex items-center justify-end pt-3 md:pt-0">
-                <q-btn
-                  no-caps
-                  rounded
-                  unelevated
-                  class="bg-[rgba(113,113,113,0.3)] mr-4 text-weight-normal"
-                >
-                  <i-material-symbols-bookmark-added-rounded
-                    v-if="true"
-                    class="size-28px"
-                  />
-                  <i-material-symbols-bookmark-add-outline-rounded
-                    v-else
-                    class="size-28px"
-                  />
-                  <span class="text-[14px] font-weight-normal ml-1"
-                    >Theo dõi</span
-                  >
-                </q-btn>
+                <button-follow :video="data.video" />
 
                 <q-btn
                   no-caps
@@ -554,7 +537,7 @@ meta:
 
 <script lang="ts" setup>
 import { useThrottleFn, watchThrottled } from "@vueuse/core"
-import type { Video} from "api/index";
+import type { Video } from "api/index"
 import { getSearch, getWatch } from "api/index"
 import {
   insertHentaiHistory as $insertHentaiHistory,
@@ -804,7 +787,7 @@ const sectionsPWatch = usePWatchVideos(() => {
 
 // ================== api get progress watch in series ==================
 const seriesPWatch = usePWatchVideos(() => {
-  if (!series.value) return  createEmptyArray<Video>()
+  if (!series.value) return createEmptyArray<Video>()
 
   return series.value.videos
 }, masterSignal)

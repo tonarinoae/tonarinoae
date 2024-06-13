@@ -2,7 +2,11 @@
 
 import type { LocationQueryValue, RouteLocationNormalized } from "vue-router"
 
-function fetchPolyfill(url: string, body?: URLSearchParams | string, signal?: AbortSignal) {
+function fetchPolyfill(
+  url: string,
+  body?: URLSearchParams | string,
+  signal?: AbortSignal
+) {
   return fetch(url, {
     body,
     signal,
@@ -121,8 +125,8 @@ export interface Watch {
   }[]
 }
 export function getWatch(slug: string, signal: AbortSignal): Promise<Watch> {
-  return fetchPolyfill(`${API_URL}/watch?slug=${slug}`, undefined, signal).then((res) =>
-    res.json()
+  return fetchPolyfill(`${API_URL}/watch?slug=${slug}`, undefined, signal).then(
+    (res) => res.json()
   )
 }
 
