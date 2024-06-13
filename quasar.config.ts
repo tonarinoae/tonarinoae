@@ -99,6 +99,14 @@ export default configure((/* ctx */ { prod }) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ["rebuildCache" as unknown as any]: false, // rebuilds Vite/linter/etc cache on startup
 
+      env: Object.fromEntries(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        Object.entries(process.env as unknown as any).filter(
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          ([_name, value]) => !(value as string).includes("\\")
+        )
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ) as unknown as any,
       // publicPath: '/',
       // analyze: true,
 
