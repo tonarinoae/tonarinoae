@@ -95,7 +95,7 @@
     "@testing-library/vue": "^8.0.1",
     "@types/node": "20.14.0",
     "@types/prompts": "^2.4.9",
-    "@types/serviceworker": "^0.0.82",
+    "@types/serviceworker": "^0.0.87",
     "@typescript-eslint/eslint-plugin": "^7.8.0",
     "@typescript-eslint/parser": "^7.8.0",
     "@unocss/transformer-directives": "^0.60.2",
